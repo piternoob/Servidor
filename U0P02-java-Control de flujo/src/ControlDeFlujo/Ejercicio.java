@@ -13,7 +13,7 @@ public class Ejercicio {
 
 		do {
 			System.out.println("Elige una opción\n"
-					+ "1. Ejercicio 1. \n"
+					+ "1. Ejercicio 1.\n"
 					+ "2. Ejercicio 2.\n"
 					+ "3. Ejercicio 3.\n"
 					+ "4. Ejercicio 4.\n"
