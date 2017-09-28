@@ -1,0 +1,96 @@
+<html>
+
+<head>
+</head>
+<script type="text/javascript">
+  function ejercicio9() {
+    var fecha = prompt("Introduce una fecha:");
+    var separador;
+    var dia;
+    var mes;
+    var ano;
+    var posicion1 = 0;
+    var posicion2;
+    var contador = 0;
+    var numeros = "0123456789";
+    var caracter;
+    var num = true;
+    var i;
+
+    if (fecha.indexOf("/") != -1) {
+      separador = "/";
+    } else {
+      separador = "-";
+    }
+
+    for (var i = 0; i < fecha.length && num; i++) {
+      if (fecha.charAt(i) == separador) {
+        contador++;
+      } else {
+        num = false;
+        for (var j = 0; j < numeros.length && !num; j++) {
+          if (fecha.charAt(i) == numeros.charAt(j)) {
+            num = true;
+          }
+        }
+      }
+    }
+
+    if (contador == 2 && num) {
+      posicion1 = fecha.indexOf(separador);
+      posicion2 = fecha.lastIndexOf(separador);
+      dia = fecha.substring(0, posicion1);
+      mes = fecha.substring(posicion1 + 1, posicion2);
+      ano = fecha.substring(posicion2 + 1);
+      if (mes.charAt(0) == 0) {
+        mes = mes.replace(0, "");
+      }
+
+      if ((dia.length == 1 || dia.length == 2) && (mes >= 1 && mes <= 12) && (ano.length == 2 || ano.length == 4)) {
+        switch (mes) {
+          case "1":
+          case "3":
+          case "5":
+          case "7":
+          case "8":
+          case "10":
+          case "12":
+            if (dia <= 31 && dia >= 1) {
+              document.write("Fecha valida");
+            } else {
+              document.write("Fecha no valida");
+            }
+            break;
+          case "4":
+          case "6":
+          case "9":
+          case "11":
+            if (dia <= 30 && dia >= 1) {
+              document.write("Fecha valida");
+            } else {
+              document.write("Fecha no valida");
+            }
+            break;
+          case "2":
+            if (dia <= 28 && dia >= 1) {
+              document.write("Fecha valida");
+            } else if ((dia == 29 && ano.length == 2 && ano % 4 == 0) || (dia == 29 && ano.length == 4 && ((ano % 4 == 0 && ano % 100 != 0) || ano % 400 == 0))) {
+              document.write("Fecha valida");
+            } else {
+              document.write("Fecha no valida");
+            }
+            break;
+        }
+
+      }
+    } else {
+      document.write("Fecha no valida.");
+    }
+
+  }
+</script>
+
+<body onload="ejercicio9()">
+</body>
+
+</html>

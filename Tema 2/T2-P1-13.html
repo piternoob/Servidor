@@ -1,0 +1,30 @@
+<html>
+
+<head>
+</head>
+<script type="text/javascript">
+  function ejercicio13() {
+    var cadena=prompt("Introduce una cadena:");
+    var letras= "abcdefghijklmnopqrstvwxyz";
+    var correcto=true;
+
+    for (var i = 0; i < cadena.length && correcto; i++) {
+      correcto=false;
+      for (var j = 0; j < letras.length && !correcto; j++) {
+        if (cadena.charAt(i)==letras.charAt(j)) {
+          correcto=true;
+        }
+      }
+    }
+    if(correcto) {
+      document.write("La cadena es una palabra.")
+    } else {
+      document.write("La cadena no es una palabra.")
+    }
+}
+</script>
+
+<body onload="ejercicio13()">
+</body>
+
+</html>
