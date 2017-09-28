@@ -12,8 +12,8 @@ public class Ejercicio {
 		int opcion;
 
 		do {
-			System.out.println("Elige una opciÛn\n"
-					+ "1. Ejercicio 1.\n"
+			System.out.println("Elige una opci√≥n\n"
+					+ "1. Ejercicio 1. \n"
 					+ "2. Ejercicio 2.\n"
 					+ "3. Ejercicio 3.\n"
 					+ "4. Ejercicio 4.\n"
@@ -68,7 +68,7 @@ public class Ejercicio {
 	public static void ejercicio1() {
 		String dia;
 
-		System.out.println("Introduce el dÌa de la semana:");
+		System.out.println("Introduce el d√≠a de la semana:");
 		dia=sc.nextLine();
 		dia=dia.toLowerCase();
 
@@ -85,7 +85,7 @@ public class Ejercicio {
 			System.out.println("No es laborable.");
 			break;
 		default:
-			System.out.println("DÌa incorrecto.");
+			System.out.println("D√≠a incorrecto.");
 			break;
 		}
 	}
@@ -112,7 +112,7 @@ public class Ejercicio {
 		int suma=0, numero;
 
 		while(suma<=50) {
-			System.out.println("Introduce un n˙mero para sumarlo:");
+			System.out.println("Introduce un n√∫mero para sumarlo:");
 			numero=validarEntero();
 			suma+=numero;
 		}
@@ -125,7 +125,7 @@ public class Ejercicio {
 		boolean correcto=false;
 
 		do {
-			System.out.println("Introduce un n˙mero:");
+			System.out.println("Introduce un n√∫mero:");
 			try {
 				numero=sc.nextInt();
 				correcto=true;
@@ -136,7 +136,7 @@ public class Ejercicio {
 		}while(!correcto);
 		
 		do {
-			System.out.println("Introduce un n˙mero entre el 1 y el 10:");
+			System.out.println("Introduce un n√∫mero entre el 1 y el 10:");
 			numero=sc.nextInt();
 		}while(numero<1 || numero>10);
 
@@ -148,10 +148,10 @@ public class Ejercicio {
 		String bis;
 		boolean bisiesto;
 
-		System.out.println("Introduce el n˙mero del mes:");
+		System.out.println("Introduce el n√∫mero del mes:");
 		mes=validarValoresEntero(1, 12);
 		sc=new Scanner(System.in);
-		System.out.println("øEl aÒo es bisiesto?");
+		System.out.println("¬øEl a√±o es bisiesto?");
 		bis=sc.nextLine();
 		if(bis.equalsIgnoreCase("si"))
 			bisiesto=true;
@@ -161,9 +161,9 @@ public class Ejercicio {
 		/*
 		if(mes==2 && bisiesto)
 
-			System.out.println("El mes 2 tiene 29 dÌas.");
+			System.out.println("El mes 2 tiene 29 d√≠as.");
 		else
-			System.out.println("El mes "+mes+" tiene "+array[mes-1]+" dÌas.");
+			System.out.println("El mes "+mes+" tiene "+array[mes-1]+" d√≠as.");
 		*/
 		
 		switch (mes) {
@@ -174,19 +174,19 @@ public class Ejercicio {
 		case 8:
 		case 10:
 		case 12:
-			System.out.println("El mes "+mes+" tiene 31 dÌas.");
+			System.out.println("El mes "+mes+" tiene 31 d√≠as.");
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			System.out.println("El mes "+mes+" tiene 30 dÌas.");
+			System.out.println("El mes "+mes+" tiene 30 d√≠as.");
 			break;
 		case 2:
 			if(bisiesto)
-				System.out.println("El mes 2 tiene 29 dÌas.");
+				System.out.println("El mes 2 tiene 29 d√≠as.");
 			else
-				System.out.println("El mes "+mes+" tiene 28 dÌas.");
+				System.out.println("El mes "+mes+" tiene 28 d√≠as.");
 			break;
 		default:
 			break;
@@ -197,9 +197,9 @@ public class Ejercicio {
 	public static void ejercicio6() {
 		int a, b, aux;
 
-		System.out.println("Introduce un n˙mero:");
+		System.out.println("Introduce un n√∫mero:");
 		a=sc.nextInt();
-		System.out.println("Introduce otro n˙mero:");
+		System.out.println("Introduce otro n√∫mero:");
 		b=sc.nextInt();
 
 		if(a>b) {
@@ -218,7 +218,7 @@ public class Ejercicio {
 	public static void ejercicio7() {
 		int numero, aux, factorial=1;
 
-		System.out.println("Introduce un n˙mero:");
+		System.out.println("Introduce un n√∫mero:");
 		numero=sc.nextInt();
 		aux=numero;
 
@@ -252,18 +252,18 @@ public class Ejercicio {
 
 		do {
 
-			System.out.println("Elige una opciÛn\n"
-					+ "1. Calcular ·reas.\n"
-					+ "2. Calcular perÌmetros.\n"
+			System.out.println("Elige una opci√≥n\n"
+					+ "1. Calcular √°reas.\n"
+					+ "2. Calcular per√≠metros.\n"
 					+ "3. Salir.");
 			opcion1=validarValoresEntero(1, 3);
 
 			switch (opcion1) {
 			case 1:
 				do {
-					System.out.println("Elige una opciÛn\n"
-							+ "1. ¡rea del cuadrado.\n"
-							+ "2. ¡rea del rectangulo.\n"
+					System.out.println("Elige una opci√≥n\n"
+							+ "1. √Årea del cuadrado.\n"
+							+ "2. √Årea del rectangulo.\n"
 							+ "3. Volver.");
 					opcion2=validarValoresEntero(1, 3);
 
@@ -272,15 +272,15 @@ public class Ejercicio {
 						System.out.println("Introduce el lado del cuadrado:");
 						lado=validarEntero();
 						area=(int)Math.pow(lado, 2);
-						System.out.println("El ·rea del cuadrado de lado "+lado+" es: "+area+".");
+						System.out.println("El √°rea del cuadrado de lado "+lado+" es: "+area+".");
 						break;
 					case 2:
-						System.out.println("Introduce la base del rect·ngulo:");
+						System.out.println("Introduce la base del rect√°ngulo:");
 						base=validarEntero();
-						System.out.println("Introduce la altura del rect·ngulo:");
+						System.out.println("Introduce la altura del rect√°ngulo:");
 						altura=validarEntero();
 						area=base*altura;
-						System.out.println("El ·rea del rect·ngulo de base "+base+" y altura "+altura+" es: "+area+".");
+						System.out.println("El √°rea del rect√°ngulo de base "+base+" y altura "+altura+" es: "+area+".");
 						break;
 
 					default:
@@ -290,9 +290,9 @@ public class Ejercicio {
 				break;
 			case 2:
 				do {
-					System.out.println("Elige una opciÛn\n"
-							+ "1. PerÌmetro del cuadrado.\n"
-							+ "2. PerÌmetro del rectangulo.\n"
+					System.out.println("Elige una opci√≥n\n"
+							+ "1. Per√≠metro del cuadrado.\n"
+							+ "2. Per√≠metro del rectangulo.\n"
 							+ "3. Volver.");
 					opcion2=validarValoresEntero(1, 3);
 
@@ -301,15 +301,15 @@ public class Ejercicio {
 						System.out.println("Introduce el lado del cuadrado:");
 						lado=validarEntero();
 						perimetro=lado*4;
-						System.out.println("El perÌmetro del cuadrado de lado "+lado+" es: "+perimetro+".");
+						System.out.println("El per√≠metro del cuadrado de lado "+lado+" es: "+perimetro+".");
 						break;
 					case 2:
-						System.out.println("Introduce la base del rect·ngulo:");
+						System.out.println("Introduce la base del rect√°ngulo:");
 						base=validarEntero();
-						System.out.println("Introduce la altura del rect·ngulo:");
+						System.out.println("Introduce la altura del rect√°ngulo:");
 						altura=validarEntero();
 						perimetro=(base+altura)*2;
-						System.out.println("El perÌmetro del rect·ngulo de base "+base+" y altura "+altura+" es: "+perimetro+".");
+						System.out.println("El per√≠metro del rect√°ngulo de base "+base+" y altura "+altura+" es: "+perimetro+".");
 						break;
 
 					default:
@@ -337,9 +337,9 @@ public class Ejercicio {
 			if(cadenaFinal.charAt(i)!=cadenaFinal.charAt(j))
 				palindromo=false;
 		if(palindromo)
-			System.out.println("La cadena "+cadena+" es palÌndroma.");
+			System.out.println("La cadena "+cadena+" es pal√≠ndroma.");
 		else
-			System.out.println("La cadena "+cadena+" no es palÌndroma.");
+			System.out.println("La cadena "+cadena+" no es pal√≠ndroma.");
 	}
 
 	public static void ejercicio10() {
