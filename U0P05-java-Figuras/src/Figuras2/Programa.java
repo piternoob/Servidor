@@ -8,41 +8,15 @@ public class Programa {
 		Cuadrado cua1;
 		Triangulo tri1;
 		
-		cir1=new Circunferencia(4.8);
-		cir2=new Circunferencia(1.5);
-		cua1=new Cuadrado(4.2);
-		tri1=new Triangulo(8, 15);
+		cir1=new Circunferencia(4.8,"Círculo 1", Color.Amarillo);
+		cir2=new Circunferencia(1.5,"Círculo 2", Color.Azul);
+		cua1=new Cuadrado(4.2,"Cuadrado 1", Color.Naranja);
+		tri1=new Triangulo(8, 15,"Triángulo 1", Color.Rojo);
 		
-		calcularArea(cir1, cir2, cua1, tri1);
-		calcularPerimetro(cir1, cir2, cua1, tri1);
-	}
-	
-	public static void calcularArea(Circunferencia cir1, Circunferencia cir2, Cuadrado cua1, Triangulo tri1) {
-		double aTotal, aCir1, aCir2, aCua1, aTri1;
-		double pi=Math.PI;
-		
-		aCir1=pi*Math.pow(cir1.getRadio(), 2);
-		aCir2=pi*Math.pow(cir2.getRadio(), 2);
-		aCua1=Math.pow(cua1.getLado(), 2);
-		aTri1=tri1.getBase()*tri1.getAltura()/2;
-		
-		aTotal=aCir1/2+aCir2+0.75+aCua1+aTri1;
-		
-		System.out.println("El area de la figura es: "+aTotal+".");
-	}
-
-	public static void calcularPerimetro(Circunferencia cir1, Circunferencia cir2, Cuadrado cua1, Triangulo tri1) {
-		double pTotal, pCir1, pCir2, pCua1, pTri1;
-		double pi=Math.PI;
-		
-		pCir1=2*pi*cir1.getRadio();
-		pCir2=2*pi*cir2.getRadio();
-		pCua1=cua1.getLado()*4;
-		pTri1=tri1.getBase()+tri1.getAltura()+Math.sqrt(Math.pow(tri1.getBase(), 2)+Math.pow(tri1.getAltura(), 2));
-	
-		pTotal=pCir1/2+pCir2*0.75+pCua1-cua1.getLado()+pTri1-(cir1.getRadio()*2-cir2.getRadio()*2-cua1.getLado());
-		
-		System.out.println("El perimetro de la figura es: "+pTotal+".");
+		System.out.println(cir1.toString()+"\n"+
+				cir2.toString()+"\n"+
+				cua1.toString()+"\n"+
+				tri1.toString());
 	}
 	
 }
