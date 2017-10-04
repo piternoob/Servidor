@@ -1,7 +1,5 @@
 package Figuras3;
 
-import java.util.Comparator;
-
 public abstract class Figura{
 	
 	private String titulo;

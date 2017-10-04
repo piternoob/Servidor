@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 public class GestorFiguras {
 
-	/** 
-	 * La clase tiene un atributo de tipo ArrayList que almacenará nuestras figuras
-	 */
 	private ArrayList<Figura> array;
 
 	/** 
