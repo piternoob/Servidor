@@ -1,4 +1,4 @@
-package Figuras2;
+package Figuras3;
 
 public class Circunferencia extends Figura{
 	private double radio;

@@ -1,4 +1,4 @@
-package Figuras2;
+package Figuras3;
 
 public class Cuadrado extends Figura{
 	private double lado;

@@ -16,5 +16,12 @@ public class Circunferencia {
 		return "Circunferencia [radio=" + radio + "]";
 	}
 	
+	public double calcularPerimetro() {
+		return 2*Math.PI*radio;
+	}
+
+	public double calcularArea() {
+		return Math.PI*Math.pow(radio, 2);
+	}
 	
 }

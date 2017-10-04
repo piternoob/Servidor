@@ -16,4 +16,11 @@ public class Cuadrado {
 		return "Cuadrado [lado=" + lado + "]";
 	}
 	
+	public double calcularPerimetro() {
+		return lado*4;
+	}
+
+	public double calcularArea() {
+		return Math.pow(lado, 2);
+	}
 }

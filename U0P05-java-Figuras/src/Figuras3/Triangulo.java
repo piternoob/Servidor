@@ -1,4 +1,4 @@
-package Figuras2;
+package Figuras3;
 
 public class Triangulo extends Figura{
 	private double base, altura;

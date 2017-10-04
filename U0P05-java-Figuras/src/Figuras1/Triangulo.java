@@ -21,4 +21,12 @@ public class Triangulo {
 		return "Triangulo [base=" + base + ", altura=" + altura + "]";
 	}
 	
+	public double calcularPerimetro() {
+		return base+altura+Math.sqrt(Math.pow(base, 2)+Math.pow(altura, 2));
+	}
+
+	public double calcularArea() {
+		return base*altura/2;
+	}
+	
 }
