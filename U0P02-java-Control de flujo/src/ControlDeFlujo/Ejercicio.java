@@ -144,7 +144,6 @@ public class Ejercicio {
 
 	public static void ejercicio5() {
 		int mes;
-		//int array[]= {31,28,31,30,31,30,31,31,30,31,30,31};
 		String bis;
 		boolean bisiesto;
 
@@ -157,14 +156,6 @@ public class Ejercicio {
 			bisiesto=true;
 		else
 			bisiesto=false;
-
-		/*
-		if(mes==2 && bisiesto)
-
-			System.out.println("El mes 2 tiene 29 días.");
-		else
-			System.out.println("El mes "+mes+" tiene "+array[mes-1]+" días.");
-		*/
 		
 		switch (mes) {
 		case 1:
@@ -191,16 +182,15 @@ public class Ejercicio {
 		default:
 			break;
 		}
-		
 	}
 
 	public static void ejercicio6() {
 		int a, b, aux;
 
 		System.out.println("Introduce un número:");
-		a=sc.nextInt();
+		a=validarValoresEntero(1, 10);
 		System.out.println("Introduce otro número:");
-		b=sc.nextInt();
+		b=validarValoresEntero(1, 10);
 
 		if(a>b) {
 			aux=a;
@@ -209,7 +199,7 @@ public class Ejercicio {
 		}
 
 		while(a<b) {
-			System.out.println("*");
+			System.out.print("*");
 			a++;
 		}
 
@@ -227,6 +217,7 @@ public class Ejercicio {
 			factorial*=numero;
 			numero--;
 		}while(numero!=1);
+		System.out.println("El factorial de "+aux+" es: "+factorial);
 
 		numero=aux;
 		factorial=1;
@@ -236,6 +227,7 @@ public class Ejercicio {
 			factorial*=numero;
 			numero--;
 		}
+		System.out.println("El factorial de "+aux+" es: "+factorial);
 
 		numero=aux;
 		factorial=1;
@@ -243,7 +235,6 @@ public class Ejercicio {
 		//for
 		for(int i=numero; i>1; i--) 
 			factorial*=i;
-
 		System.out.println("El factorial de "+aux+" es: "+factorial);
 	}
 

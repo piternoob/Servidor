@@ -2,6 +2,11 @@ package Figuras3;
 
 import java.util.ArrayList;
 
+/**
+ * Clase GestorFiguras con un ArrayList que gestionará nuestras figuras
+ * @author Pedro Plaza
+ */
+
 public class GestorFiguras {
 
 	private ArrayList<Figura> array;
@@ -48,12 +53,13 @@ public class GestorFiguras {
 	
 	/** 
 	 * Método calcularSumatorioAreas que nos va sumando las areas de cada figura del ArrayList
+	 * @return suma devuelve el sumatorio de todas las areas de Arraylist
 	 */
-	public void calcularSumatorioAreas() {
+	public double calcularSumatorioAreas() {
 		double suma=0;
 		for(Figura f : array)
 			suma+=f.calcularArea();
-		System.out.println("La suma de todas las áreas es: "+suma);
+		return suma;
 	}
 
 }

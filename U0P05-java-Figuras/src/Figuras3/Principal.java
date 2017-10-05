@@ -23,5 +23,7 @@ public class Principal {
 		gestor.eliminarFigura(cir2);
 		
 		gestor.mostrarFiguras();
+		
+		System.out.println("La suma de todas las areas es: "+gestor.calcularSumatorioAreas());
 	}
 }
