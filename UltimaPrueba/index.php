@@ -97,7 +97,7 @@
 		    echo "<h3>Orden aleatorio de los cáracteres: ".str_shuffle($cadena)."</h3>";*/
 		
 		    //arrays
-		    $array1 = array("Pedro", "Plaza", "Ramos");
+		    /*$array1 = array("Pedro", "Plaza", "Ramos");
 		    $array2 = array(0=>"Pedro", 1=>"Plaza", 4=>"Ramos");
 		    $array3[0]="Pedro";
 		    $array3[1]="Plaza";
@@ -112,6 +112,36 @@
 		          echo "<p>$array2[$i]</p>";
 		          $contador++;
 		        }
+		    }*/
+		
+		    //visualizar arrays
+		    /*$ciclos=array("DAW", "ASIR", "DAM");
+		    var_dump($ciclos);
+		    echo "<br/>";
+		    print_r($ciclos);
+		    echo "<p>";
+		    print_r($ciclos);
+            echo "</p>";*/
+            
+            //foreach
+            /*echo "<ul>";
+            $ciclos=array("DAW", "ASIR", "DAM");
+            foreach ($ciclos as $actual){
+                echo "<li>$actual</li>";
+            }
+            echo "</ul>";*/
+		
+		    //mapa
+		    $clase1=array("Pedro"=>10,"Edu"=>3.5,"Jose"=>7.5);
+		    $clase2["Pablo"]=1.5;
+		    $clase2["Félix"]=2.5;
+		    $clase2["Sergio"]=7.5;
+		    print_r($clase1);
+		    echo "<br/>";
+		    print_r($clase2);
+		    echo "<ul>";
+		    foreach ($clase1 as $clave => $valor){
+		        echo "<li>La nota media de $clave es $valor</li>";
 		    }
         ?>
 	</body>
