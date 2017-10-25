@@ -14,6 +14,7 @@ if(!isset($_POST["enviar"])){
     <input type="submit" name="enviar">
     <?php
     } else {
+        $numero=$_POST["numero"];
         $suma=0;
         if($numero<0) {
             $numero*=-1;

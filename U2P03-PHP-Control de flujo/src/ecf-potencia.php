@@ -15,6 +15,8 @@ if(!isset($_POST["enviar"])){
     <input type="submit" name="enviar">
     <?php
     } else {
+        $numero=$_POST["numero"];
+        $exponente=$_POST["exponente"];
         $potencia=1;
         for ($i=1; $i<=$exponente; $i++){
             $potencia*=$numero;

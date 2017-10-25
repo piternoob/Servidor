@@ -21,19 +21,27 @@ if(!isset($_POST["enviar"])){
         $auxMenor;
         $auxMayor;
         echo "<p>Numeros elegidos: $menor y $mayor.</p>";
-        if ($mayor<$menor){
-            $aux=$menor;
-            $menor=$mayor;
-            $mayor=$aux;
+        if ($menor<1 || $menor>10 || $mayor<1 || $mayor>10) {
+            echo "<p>Los números tienen que estar comprendidos entre 1 y 10.</p>";
+        } else {
+        if ($mayor < $menor) {
+            $aux = $menor;
+            $menor = $mayor;
+            $mayor = $aux;
         }
-        $auxMenor=$menor;
-        $auxMayor=$mayor;
-        while($mayor!=$menor){
-            echo "<p>*</p>";
-            $mayor--;
+        $auxMenor = $menor;
+        $auxMayor = $mayor;
+        echo "<p>";
+        while ($mayor != $menor) {
+            echo "*";
+            $mayor --;
         }
-        for ($i=$auxMenor; $i<$auxMayor; $i++){
-            echo "<p>*</p>";
+        echo "</p>";
+        echo "<p>";
+        for ($i = $auxMenor; $i < $auxMayor; $i ++) {
+            echo "#";
+        }
+        echo "</p>";
         }
     }
     ?>
