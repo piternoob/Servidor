@@ -6,7 +6,8 @@
 	<meta name="author" content="Pedro Plaza Ramos"/>
 </head>
 <body>
-<?php 
+<?php
+include("clases.php");
 if(!isset($_POST["enviar"])){
 ?>
 	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"], ENT_QUOTES, "UTF-8");?>" method="post">
@@ -18,7 +19,13 @@ if(!isset($_POST["enviar"])){
 	</form>
 	<?php 
 } else {
-    echo $_POST["base"]." ".$_POST["altura"];
+    $base=$_POST["base"];
+    $altura=$_POST["altura"];
+    $triangulo=new Triangulo($base, $altura);
+    echo $triangulo;
+    echo $triangulo->calcularArea();
+    echo $triangulo;
+    
 }
 ?>
 </body>
