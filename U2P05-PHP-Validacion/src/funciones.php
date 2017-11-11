@@ -1,12 +1,12 @@
 <?php
 function comprobarCorreo($param) {
     $valido=false;
+    
     if (!filter_var($param, FILTER_VALIDATE_EMAIL) === false) {
         $valido=true;
     }else{
-        echo 'Fecha no válida';
+        echo 'Correo no válido';
     }
-    
     return $valido;
 }
 function comprobarFecha ($param) {
@@ -31,38 +31,8 @@ function comprobarPostal ($param) {
     return $valido;
 }
 
-function comprobarFrase($param){
-    $regexFrase='/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/';
-    $valido=true;
-    
-    if ( !preg_match($regexFrase, $param) ) {
-        echo 'Campo inválido.';
-        $valido=false;
-    }
-    return $valido;
-}
-function comprobarPalabra($param){
-    $regexPalabra='//';
-    $valido=true;
-    
-    
-    if ( !preg_match($regexPalabra, $param) ) {
-        echo 'Campo inválido.';
-        $valido=false;
-    }
-    return $valido;
-}
-
 function comprobarPass($param){
-    /*$valido;
-    if (preg_match("/*\w*\c/", $param)) {
-        $valido=false;
-        echo "No es un numero";
-    }else{
-        $valido=true;
-    }
-    return  $valido;
-    */
+    
 }
 
 function comprobarTelefono($param){

@@ -1,19 +1,4 @@
 <!DOCTYPE html>
-<?php
-/*
- * completado = false
- * si se ha pulsado Enviar (hay datos)
- * > Anotar los datos recibidos en variables
- * > Validar: si todo está bien, completado = true
- *
- * si completado == true
- * > Mostrar datos, continuar con la aplicación
- * en otro caso
- * > Mostrar el formulario, teniendo en cuenta:
- * Recordar los campos que el usuario ya había rellenado (esto es muy apreciado por el usuario)
- * Mostrar los mensajes de error correspondientes
- */
-?>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -33,8 +18,8 @@ if (isset($_POST["enviar"])) {
     $pass = $_POST["pass"];
     $ciclo = $_POST["ciclo"];
     $direccion = $_POST["direccion"];
-    $vNombre=comprobarPalabra($nombre);
-    $vApellidos=comprobarFrase($apellidos);
+    $vNombre=true;
+    $vApellidos=true;
     $vEdad = true;
     $vFecha=comprobarFecha($fecha);
     $vCorreo=comprobarCorreo($correo);
@@ -47,7 +32,7 @@ if (isset($_POST["enviar"])) {
     else
         $vPostal = true;
     $vPass = comprobarPass($pass);
-    $vCiclo = comprobarFrase($ciclo);
+    $vCiclo = true;
     if (! empty($direccion))
         $vDireccion = comprobarDireccion($direccion);
     else
