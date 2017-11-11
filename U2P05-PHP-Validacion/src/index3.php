@@ -33,6 +33,33 @@ if (isset($_POST["enviar"])) {
     $pass = $_POST["pass"];
     $ciclo = $_POST["ciclo"];
     $direccion = $_POST["direccion"];
+    $vNombre;
+    $vApellidos;
+    if (! empty($edad))
+        $vEdad;
+    else
+        $vEdad = true;
+    $vFecha;
+    $vCorreo;
+    if (! empty($telefono))
+        $vTelefono;
+    else
+        $vTelefono = true;
+    if (! empty($municipio))
+        $vMunicipio;
+    else
+        $vMunicipio = true;
+    if (! empty($postal))
+        $vPostal;
+    else
+        $vPostal = true;
+    $vPass;
+    $vCiclo;
+    if (! empty($direccion))
+        $vDireccion;
+    else
+        $vDireccion = true;
+    
     /* if(validar) completado=true; */
 } else{
     $nombre = "";
@@ -90,10 +117,10 @@ if ($completado) {
 			</tr>
 			<tr>
 				<td>Contraseña: <input type="password" name="pass" value="<?php echo $pass; ?>"required placeholder="Min 6 caracteres"></td>
-				<td>Ciclo Formativo: <input type="text" name="ciclo" value="<?php echo $ciclo; ?>"></td>
+				<td>Ciclo Formativo: <input type="text" name="ciclo" value="<?php echo $ciclo; ?>"required></td>
 			</tr>
 			<tr>
-				<td colspan="2">Dirección: <input type="text" name="direccion" value="<?php echo $direccion; ?>"></td>
+				<td colspan="2">Direccion: <input type="text" name="direccion" value="<?php echo $direccion; ?>"></td>
 			</tr>
 		</table>
 		<input type="submit" name="enviar" value="Enviar Datos">

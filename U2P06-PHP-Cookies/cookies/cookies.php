@@ -30,4 +30,5 @@ else
 ?>
 <p><a href="<?php echo $_SERVER['PHP_SELF']?>">Enlace a esta misma página</a></p>
 <p><a href="<?php echo $_SERVER['PHP_SELF']?>?borrar=true">Eliminar cookie</a></p>
-</body></html>
+</body>
+</html>
