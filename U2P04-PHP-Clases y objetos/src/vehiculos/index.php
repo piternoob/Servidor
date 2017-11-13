@@ -27,8 +27,8 @@ if(!isset($_POST["enviar"])){
     $color=$_POST["color"];
     $marca=$_POST["marca"];
     $modelo=$_POST["modelo"];
-    $vehiculo=new Vehiculo($matricula, $color, $marca, $modelo);
-    echo $vehiculo->recorrer();
+    $vehiculo=new Coche($matricula, $color, $marca, $modelo);
+    echo $vehiculo;
     
 }
 ?>
