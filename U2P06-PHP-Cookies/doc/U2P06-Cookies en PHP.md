@@ -1,6 +1,6 @@
 ###### *Desarrollo Web en Entorno Servidor - Curso 2017/2018 - IES Leonardo Da Vinci - Alberto Ruiz*
 ## U2P06 - Cookies en PHP
-#### Entrega de: *pon aquí tu nombre*
+#### Entrega de: *Pedro Plaza Ramos*
 ----
 #### 1. Descripción:
 
