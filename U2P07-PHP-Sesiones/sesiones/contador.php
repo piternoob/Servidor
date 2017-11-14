@@ -1,7 +1,7 @@
 <?php
 if (session_status() == PHP_SESSION_NONE)
     session_start();
-if (isset($_SESSION['contador']))
+if (isset($_SESSION['contador'])) 
     $_SESSION['contador'] += 1;
 else
     $_SESSION['contador'] = 0;
