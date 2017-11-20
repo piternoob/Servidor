@@ -17,10 +17,10 @@ if (! isset($_SESSION["segunda"]))
 if (isset($_POST["enviar"]))
     if (! empty($_POST["tercera"]))
         if ($_POST["tercera"] == "pt") {
-            $_SESSION["tercera"] = "Pregunta correcta.";
+            $_SESSION["tercera"] = "Correcta.";
             header("Location: resultados.php");
         } else {
-            $_SESSION["tercera"] = "Pregunta incorrecta.";
+            $_SESSION["tercera"] = "Incorrecta.";
             header("Location: resultados.php");
         }
     else
@@ -29,11 +29,11 @@ if (isset($_POST["enviar"]))
 ?>
 <html>
 <head>
-<title>Test 1</title>
+<title>Test 3</title>
 <meta charset="UTF-8">
 </head>
 <body>
-	<p>Pregunta 1:</p>
+	<p>Pregunta 3:</p>
 	<p>¿Quién país ganó Eurovisión el año pasado?</p>
 	<form
 		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"], ENT_QUOTES, "UTF-8");?>"

@@ -6,8 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 if (!isset($_SESSION["nombre"]))
     header("Location: registro.php");
-    else
-        $correcto=true;
+
 ?>
 <html>
 <head>
@@ -15,11 +14,7 @@ if (!isset($_SESSION["nombre"]))
 	<meta charset="UTF-8">
 </head>
 <body>
-<?php 
-if($correcto){
-    echo "<h3>Bienvenido $_SESSION[nombre].</h3>";
-    echo '<a href="test1.php">Enlace a la primera pregunta.</a>';
-}
-?>
+<?php echo "<h3>Bienvenido $_SESSION[nombre].</h3>"; ?>
+<a href="test1.php">Enlace a la primera pregunta.</a>
 </body>
 </html>

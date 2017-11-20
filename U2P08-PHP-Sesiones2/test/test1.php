@@ -5,24 +5,20 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION["nombre"]))
+if (! isset($_SESSION["nombre"]))
     header("Location: registro.php");
-    
+
 if (isset($_POST["enviar"]))
     if (! empty($_POST["primera"]))
         if ($_POST["primera"] == "frozen") {
-            $_SESSION["primera"] = "Pregunta correcta.";
+            $_SESSION["primera"] = "Correcta.";
             header("Location: test2.php");
         } else {
-            $_SESSION["primera"] = "Pregunta incorrecta.";
+            $_SESSION["primera"] = "Incorrecta.";
             header("Location: test2.php");
         }
     else
         $vacio = true;
-
-
-   
-
 ?>
 <html>
 <head>

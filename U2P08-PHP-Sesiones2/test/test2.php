@@ -1,5 +1,5 @@
 <?php
-$vacio=false;
+$vacio = false;
 if (session_status() == PHP_SESSION_NONE) {
     session_name('sesion');
     session_start();
@@ -9,16 +9,15 @@ if (! isset($_SESSION["nombre"]))
     header("Location: registro.php");
 
 if (! isset($_SESSION["primera"]))
-        header("Location: test1.php");
-    
-    
+    header("Location: test1.php");
+
 if (isset($_POST["enviar"]))
     if (! empty($_POST["segunda"]))
         if ($_POST["segunda"] == "siete") {
-            $_SESSION["segunda"] = "Pregunta correcta.";
+            $_SESSION["segunda"] = "Correcta.";
             header("Location: test3.php");
         } else {
-            $_SESSION["segunda"] = "Pregunta incorrecta.";
+            $_SESSION["segunda"] = "Incorrecta.";
             header("Location: test3.php");
         }
     else
@@ -27,7 +26,7 @@ if (isset($_POST["enviar"]))
 ?>
 <html>
 <head>
-<title>Test 1</title>
+<title>Test 2</title>
 <meta charset="UTF-8">
 </head>
 <body>
