@@ -15,10 +15,13 @@ Incluye capturas y bloques de código en los momentos relevantes
 
 * Abre un navegador Chrome o Firefox y muestra las herramientas de desarrollador para poder analizar las cookies, tal como hicimos en la práctica anterior.
 * Inicia sesión en el curso virtual de Moodle. Observa las diferentes cookies: ¿puedes distinguir las de sesión? Incluye captura de las cookies.
+![](imagenes/1.png)
 * Comprueba cómo al cerrar la sesión de Moodle, las cookies de sesión no han desaparecido, pero ya no puedo acceder: el motivo es que la sesión sólo ha sido borrada desde el lado del servidor, pero nuestra cookie permanece.
+![](imagenes/1.png)
 * Inicia sesión de nuevo y borra la cookie de forma manual a través de las herramientas de desarrollador del navegador. Observa el resultado.
 * Inicia de nuevo sesión pero ahora, durante la misma, borra las cookies del navegador (normalmente esta acción se enmarca en el menú de *Privacidad*): comprueba cómo se pierde la sesión actual y es necesario autenticarse de nuevo. Observa, como dijimos antes, que la cookie con el identificador de sesión permanece en nuestro navegador: pero aunque no podamos verlo, el servidor ha borrado los datos asociados a nuestro identificador de sesión.
 * Realiza la misma prueba con una sesión de correo electrónico, por ejemplo en Gmail. Incluye capturas de las cookies. Gmail utiliza cookies para recordar la cuenta o cuentas a las que se accede habitualmente desde el navegador. Para probarlo, inicia sesión con un mismo navegador con dos cuentas diferentes. Intenta localizar alguna cookie relativa a este contenido e incluye la captura de todas las cookies de Gmail.
+![](imagenes/3.png)
 * Elimina las cookies del navegador
 * Accede a [www.gmail.com](www.gmail.com), introduce tu dirección de correo y, antes de enviar la contraseña, observa que se te ofrece la opción "Recuérdame" que mencionábamos en los apuntes. Desmarca esta casilla. [NOTA: desde mayo de 2017 Google ya utiliza la opción "recuérdame" por defecto, es decir, utilizará una cookie persistente. Otros sitios sí permiten ambos modos, como la web de Twitter. Intenta localizar alguno más]
 * Inicia sesión y localiza la cookie SID. Haz una captura que muestre su fecha de expiración.
@@ -26,6 +29,7 @@ Incluye capturas y bloques de código en los momentos relevantes
 * Haz una captura que muestre la fecha de expiración de la cookie SID. Observa la diferencia.
 * Entra en Amazon u otra tienda digital y escoge comprar dos productos. Comprueba que se añaden a la cesta de la compra, sin que hayamos introducido usuario y contraseña
 * Utilizando el inspector, incluye una captura en la que se vea la cookie que demuestra que se ha iniciado una sesión. Observa que no puedes encontrar ningún dato relativo a la cesta de la compra, puesto que esos datos los almacena internamente el servidor, asociados a tu identificador de sesión.
+![](imagenes/4.png)
 
 ##### Parte 2: Gestión de sesiones en PHP
 
@@ -56,6 +60,7 @@ $mensaje = "Has visitado esta página " . $_SESSION ['contador'] . " veces en es
 
 Observa que el código anterior puede hacerse más breve eliminando las llaves en las cláusulas *if* o *else* que sólo contienen una sentencia, pero por claridad se han incluido todos los bloques de llaves.
 * Ejecuta la aplicación en un navegador y observa las cookies. Incluye una captura en la que se vea cómo se llama la cookie que almacena la sesión existente, y cómo en lugar de indicarse fecha de caducidad se especifica que se trata de una cookie de sesión.
+![](imagenes/5.png)
 * Observa que el contador no aparece representado como una cookie: es una variable interna de la sesión, almacenada en el servidor.
 * Ejecuta la aplicación varias veces y elimina la cookie de sesión de forma manual a través de las herramientas de desarrollador del navegador. Recarga la página y comprueba que se inicia una nueva sesión, con un nuevo identificador y el contador a 0. Recuerda que *session_start()* sirve tanto para recuperar una sesión existente como para crear una nueva.
 
@@ -71,6 +76,7 @@ Observa que el código anterior puede hacerse más breve eliminando las llaves e
 
 * Utilizando la función `session_name`, logra que la cookie de sesión se llame 'idSesion00' (siendo 00 tu número de equipo)
 * Ejecuta tu aplicación e incluye captura de la cookie una vez funcione.
+![](imagenes/5.png)
 * Observa que la sesión con el nombre anterior no se elimina hasta que cierres el navegador.
 * Ten en cuenta que haremos varias prácticas con sesiones, y muchas pueden convivir (si por ejemplo pruebas varias prácticas en distintas pestañas del navegador). Por eso es interesante que nombres tus sesiones de forma que se identifique fácilment a qué proyecto pertenecen.
 
@@ -90,7 +96,7 @@ if(session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
 if (isset($_REQUEST["reiniciarContador"])) {
-	unset($_SESSION["contador"]); 
+	unset($_SESSION["contador"]);
 }
 ```
 
@@ -113,7 +119,7 @@ if(session_status() == PHP_SESSION_NONE) {
 }
 
 if (isset($_REQUEST["reiniciarContador"])) {
-	unset($_SESSION["contador"]); 
+	unset($_SESSION["contador"]);
 }
 if (isset($_REQUEST["cerrarSesion"])) {
 	$_SESSION=array();
@@ -158,3 +164,50 @@ else {
 
 * Añade un formulario al código, de forma que el administrador pueda modificar manualmente el número de visitas. Por ejemplo, si introduce el valor *100* en el formulario, la siguiente visita que se contabilizará será la *101*.
 
+Codigo
+```PHP
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_name('idSesion00');
+    session_start();
+}
+if (isset($_REQUEST["reiniciarContador"]))
+    unset($_SESSION["contador"]);
+if (isset($_REQUEST["cerrarSesion"])) {
+    $_SESSION = array();
+    session_unset();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+    }
+    session_destroy();
+}
+if (session_status() == PHP_SESSION_NONE)
+    $mensaje = "No hay sesión iniciada";
+else {
+    if (isset($_SESSION['contador']))
+        $_SESSION['contador'] += 1;
+    else
+        $_SESSION['contador'] = 1;
+    if(isset($_POST["enviar"]) && !empty($_POST["valor"]))
+        $_SESSION['contador'] =$_POST["valor"];
+    $mensaje = "Has visitado esta página " . $_SESSION['contador'] . " veces en esta sesión.";
+}
+?>
+
+<html>
+<head>
+<title>Sesiones</title>
+<meta charset="UTF-8"/>
+</head>
+<body>
+<h3><?php echo $mensaje;?></h3>
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"], ENT_QUOTES, "UTF-8");?>" method="post">
+Valor del contador: <input type="number" name=valor>
+<input type="submit" name="enviar" value="Enviar Datos">
+</form>
+<p><a href="<?php echo $_SERVER['PHP_SELF']?>">Recargar la página</a></p>
+<p><a href="<?php echo $_SERVER['PHP_SELF']."?reiniciarContador=true"?>">Reiniciar contador</a></p>
+<p><a href="<?php echo $_SERVER['PHP_SELF']."?cerrarSesion=true"?>">Cerrar sesión</a></p>
+</body></html>
+```
