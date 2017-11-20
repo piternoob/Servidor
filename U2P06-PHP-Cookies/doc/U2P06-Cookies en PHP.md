@@ -17,12 +17,19 @@ Incluye capturas relevantes, y fragmentos de código con las modificaciones que 
 * Averigua cómo mostrar en Firefox y Chrome las cookies que tienen almacenadas ambos navegadores. Incluye una captura del listado de cookies en ambos.
 * Ahora accede a alguna web que sepas que utilice cookies (son casi todas). Incluye una captura de las cookies accesibles para este sitio web en concreto:
   * Chrome: *Más herramientas > Herramientas para desarrolladores > Application > Cookies*
+  ![](imagenes/1.png)
   * Firefox: *Desarrollador > Inspector > Almacenamiento > Cookies*. Inicialmente está deshabilitada la sección de Almacenamiento. Para habilitarla, haz clic en los ajustes del inspector (icono de rueda dentada) y marca la casilla de Almacenamiento.
+  ![](imagenes/2.png)
+
 * Observa que puedes **acceder rápidamente a estas herramientas** haciendo clic en la página con el botón secundario y escogiendo *Inspeccionar*.
 * Entra en la web de conversión de divisas [www.xe.com](www.xe.com). Averigua a través del formulario cuántos euros son 2000 coronas islandesas (ISK). Puedes elegir otras divisas para la prueba.
+![](imagenes/3.png)
 * Cierra el navegador y comprueba que al volver a abrirlo y regresar a la web, el formulario "recuerda" las divisas sobre las que querías hacer la conversión.
+![](imagenes/4.png)
 * Utilizando el inspector, incluye una captura en la que se vean las cookies. ¿Puedes identificar la cookie o cookies responsables de recordar las divisas?
+![](imagenes/5.png)
 * Elimina la cookie o cookies que crees responsables, y actualiza el navegador para comprobar el resultado.
+* ![](imagenes/6.png)
 
 ##### Parte 2: Cookies en PHP
 
@@ -69,7 +76,9 @@ else
 ##### 2.1 Funcionamiento básico de las cookies
 
 * Ejecuta la aplicación en uno de los navegadores que estudiaste en la Parte 1 de esta práctica. Antes de realizar ninguna prueba, activa las herramientas de desarrollador para comprobar que no hay cookies para este sitio.
+![](imagenes/7.png)
 * Rellena el formulario con tu nombre y haz clic en *Enviar*. Comprueba con las herramientas del navegador que se ha creado correctamente la cookie: sin embargo, se ha mostrado el formulario otra vez. El motivo es que la cookie sólo será leída al cargar la página. Para comprobarlo, haz clic en el enlace y comprueba que ahora sí aparece el nombre
+![](imagenes/8.png)
 
 ##### 2.2 Modificación de cookies
 
@@ -77,15 +86,18 @@ La modificación de una cookie (o de uno de sus parámetros) se hace sobreescrib
   1. Abre la página `cookies.php` en un navegador y muestra las herramientas de desarrollador para poder examinar las cookies en tiempo real.
   2. Introduce tu nombre en el formulario: comprueba que la cookie se actualiza con ese valor
   3. Debido a que las cookies sólo se leen al cargar la página, se nos muestra de nuevo el formulario: ahora introduce el nombre de tu compañero y hac clic en *Enviar*
+  ![](imagenes/9.png)
   4. Observa que la cookie tiene ya almacenada el nombre de tu compañero (se ha modificado), pero ves tu nombre debido al mismo efecto de desfase.
   5. Haz clic en el enlace para volver a cargar la página, y comprueba que ahora sí que aparece el nombre de tu compañero.
   6. Corrige el desfase sufrido en estas últimas pruebas. Para ello utiliza la función 'header' (ver apuntes) para forzar la recarga de la página en el momento en que se modifica el valor de la cookie.
+  ![](imagenes/10.png)
 
 ##### 2.3 Caducidad de las cookies
 
 * Examina la fecha de caducidad de la cookie en las herramientas del navegador
 * Modifica el código de tu programa para que la cookie caduque a los 15 segundos
 * Comprueba que pasado ese tiempo desde que introduces tu nombre, si haces clic en el enlace para volver a cargar la página desaparece la cookie y vuelve a mostrarse el formulario
+![](imagenes/11.png)
 
 ##### 2.4 Eliminación de cookies
 
@@ -93,6 +105,41 @@ La modificación de una cookie (o de uno de sus parámetros) se hace sobreescrib
   * Introduce en tu código un enlace *Eliminar cookie* que redirija a esta misma página, pero incluyendo un parámetro *eliminarCookie* con el valor que desees, por ejemplo *true* o el nombre de la cookie.
   * Modifica tu código para que, en caso de recibir el parámetro *eliminarCookie*, se elimine la cookie.
   * Observa que se mantiene el efecto de desfase y es necesario volver a cargar la página para apreciar el efecto de la eliminación
+  ```PHP
+  <?php
+if (isset($_REQUEST["borrar"])){
+    setcookie("visitante", $_POST["nombre"], time() - 15, "/");
+    header("Location: ".$_SERVER["PHP_SELF"]);
+  }
+?>
+<html>
+<head>
+<title>Cookies</title>
+<meta charset="UTF-8"/>
+</head>
+<body>
+<?php
+if(isset($_POST["enviar"])) {
+	setcookie("visitante", $_POST["nombre"], time() - 15, "/");
+	header("Location: ".$_SERVER["PHP_SELF"]);
+}
+if(isset($_COOKIE["visitante"])) {
+	echo "<h2>Damos la bienvenida a $_COOKIE[visitante]</h2>";
+}
+else
+{ // solicitar nombre al usuario
+?>
+<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
+    <label>Escribe tu nombre para dirigirnos a ti:</label>
+    <input type="text" name="nombre"><br/>
+    <input type="submit" value="Enviar" name="enviar">
+</form>
+<?php
+}
+?>
+<p><a href="<?php echo $_SERVER['PHP_SELF']?>">Enlace a esta misma página</a></p>
+<p><a href="<?php echo $_SERVER['PHP_SELF']?>?borrar=true">Eliminar cookie</a></p></body></html>
+  ```
 
 ##### 2.5 Ámbito de validez de las cookies
 
@@ -120,7 +167,9 @@ else {
 ```
 
 * Mantén en dos pestañas del navegador ambas páginas (`cookies.php`y `cookies2.php`). Comprueba que cuando das valor a la cookie en la primera, la segunda muestra dicho valor.
+![](imagenes/12.png)
 * Ahora modifica de nuevo el ámbito para que sea "/U2P06-PHP-Cookies/cookies". Comprueba que ahora la página `cookies2.php` ya no puede leer la cookie.
+![](imagenes/13.png)
 
 ##### 2.6 Detección de cookies deshabilitadas
 
