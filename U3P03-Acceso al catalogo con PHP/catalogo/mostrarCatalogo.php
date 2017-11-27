@@ -4,7 +4,7 @@ require "Obra.php";
 <html>
 <head>
 <title>Conexión a BBDD con PHP</title>
-<meta charset="UTF-8"/>
+<meta charset="utf-8"/>
 </head>
 <body>
 <h2>Pruebas con la base de datos de animales</h2>
