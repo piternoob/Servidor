@@ -31,14 +31,16 @@ echo "<p>A continuación mostramos algunos registros:</p>";
 <th>Nombre Autor</th>
 </tr>
 <?php
-$resultado = $conexion -> query("SELECT * from obra,autor WHERE autor.idAutor=obra.idAutor");
+$resultado = $conexion -> query("SELECT * from obra ORDER BY idObra");
 if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
 while($fila=$resultado->fetch_assoc()) {
     echo "<tr style='background-color:lightgreen'>";
     echo "<td>$fila[idObra]</td>";
     echo "<td>$fila[nombre]</td>";
     echo "<td>$fila[idAutor]</td>";
-    echo "<td>$fila[autor.nombre]</td>";
+    $resultado2=$conexion -> query("SELECT nombre from autor WHERE $fila[idAutor]=idAutor");
+    $autor=$resultado2->fetch_assoc();
+    echo "<td>$autor[nombre]</td>";
     echo "</tr>";
 }
 ?>
