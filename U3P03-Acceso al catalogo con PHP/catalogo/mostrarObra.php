@@ -28,23 +28,19 @@ if (!isset($_REQUEST["idObra"])){
     
 }
 $id = $_REQUEST["idObra"];
-$imagen = "/U3P03-Acceso%20al%20catalogo%20con%20PHP/img/";
-// $resultado = $conexion -> query("SELECT * from obra ORDER BY idObra");
-$resultado = $conexion->query("SELECT * from obra WHERE idObra=$id");
+
+$resultado = $conexion->query("SELECT idObra, obra.idAutor, obra.nombre AS nombre, obra.imagen AS imagenObra, autor.nombre AS nomAutor, autor.imagen AS imagenAutor from obra, autor  WHERE idObra=$id");
 if ($resultado->num_rows === 0)
     echo "<p>No hay obras en la base de datos</p>";
-else{
+
 $obra=$resultado->fetch_object("Obra");
 echo "<p>Id Obra: " . $obra->getIdObra() . "</p>";
 echo "<p>Id Autor: " . $obra->getIdAutor() . "</p>";
 echo "<p>Nombre Obra: " . $obra->getNombre() . "</p>";
-$img = $obra->getImagen();
-echo "<p><img src=$imagen$img height=200px width=200px></p>";
-$resultado2 = $conexion->query("SELECT * from autor WHERE " . $obra->getIdAutor() . "=idAutor");
-$autor = $resultado2->fetch_assoc();
-echo "<p>Nombre Autor: $autor[nombre]</p>";
-echo "<p><img src=$imagen$autor[imagen] height=200px width=200px></p>";
-}
+echo "<p>".$obra->getImagenObra()."</p>";
+echo "<p>Nombre Autor: ".$obra->getNomAutor()."</p>";
+echo "<p>".$obra->getImagenAutor()."</p>";
+
 echo "<h3>Desconectando...</h3>";
 mysqli_close($conexion);
 echo "<a href='mostrarCatalogo.php'>Volver</a>";
