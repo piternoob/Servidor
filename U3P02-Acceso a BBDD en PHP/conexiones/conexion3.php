@@ -48,5 +48,12 @@ while($fila=$resultado->fetch_assoc()) {
 echo "<h3>Desconectando...</h3>";
 mysqli_close($conexion);
 ?>
+<ul>
+<li><a href="conexion1.php">Conexión 1</a></li>
+<li><a href="conexion2.php">Conexión 2</a></li>
+<li><a href="conexion4.php">Conexión 4</a></li>
+<li><a href="conexion5.php">Conexión 5</a></li>
+<li><a href="conexion6.php">Conexión 6</a></li>
+</ul>
 </body>
 </html>

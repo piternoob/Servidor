@@ -23,14 +23,38 @@ if ($conexion->connect_errno) {
     echo "<p>Error al establecer la conexión (". $conexion->connect_errno .") ".$conexion->connect_error."</p>";
 }
 echo "<p>A continuación mostramos algunos registros:</p>";
-
+?>
+<table style='border:0'>
+<tr style='background-color:lightblue'>
+<th>Chip</th>
+<th>Nombre</th>
+<th>Especie</th>
+<th>Imagen</th>
+</tr>
+<?php 
 $resultado = $conexion -> query("SELECT * FROM animal ORDER BY nombre");
 if($resultado->num_rows === 0) echo "<p>No hay animales en la base de datos</p>";
 while ($animal = $resultado->fetch_object('Animal')) {
-  echo $animal."<br/>";
+    // echo $animal."<br/>"; // primer intento más sencillo
+    echo "<tr bgcolor='lightgreen'>";
+    echo "<td>".$animal->getChip()."</td>\n";
+    echo "<td>".$animal->getNombre()."</td>\n";
+    echo "<td>".$animal->getEspecie()."</td>\n";
+    echo "<td>".$animal->getImagen()."</td>\n";
+    echo "</tr>";
 }
+?>
+</table>
+<?php
 echo "<h3>Desconectando...</h3>";
 mysqli_close($conexion);
 ?>
+<ul>
+<li><a href="conexion1.php">Conexión 1</a></li>
+<li><a href="conexion2.php">Conexión 2</a></li>
+<li><a href="conexion3.php">Conexión 3</a></li>
+<li><a href="conexion4.php">Conexión 4</a></li>
+<li><a href="conexion5.php">Conexión 5</a></li>
+</ul>
 </body>
 </html>

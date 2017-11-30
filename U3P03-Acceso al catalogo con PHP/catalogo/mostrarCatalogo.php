@@ -30,23 +30,39 @@ echo "<p>A continuación mostramos los registros:</p>";
 <tr style='background-color:lightblue'>
 <th>ID Obra</th>
 <th>ID Autor</th>
-<th>Nombre Obra</th>
+<th>Nombre Obra<a href="<?php echo $_SERVER['PHP_SELF']."?ordenObra=ASC"?>">&#9650</a><a href="<?php echo $_SERVER['PHP_SELF']."?ordenObra=DESC"?>">&#9660</a></th>
 <th>Imagen Obra</th>
-<th>Nombre Autor</th>
+<th>Nombre Autor<a href="<?php echo $_SERVER['PHP_SELF']."?ordenAutor=ASC"?>">&#9650</a><a href="<?php echo $_SERVER['PHP_SELF']."?ordenAutor=DESC"?>">&#9660</a></th>
 <th>Imagen Autor<th>
 </tr>
 <?php
-$imagen="/U3P03-Acceso%20al%20catalogo%20con%20PHP/img/";
-$resultado = $conexion -> query("SELECT * from obra ORDER BY idObra");
+$imagen = "/U3P03-Acceso%20al%20catalogo%20con%20PHP/img/";
+if (! isset($_REQUEST["ordenObra"]))
+    $resultado = $conexion->query("SELECT * from obra ORDER BY idObra");
+elseif (isset($_REQUEST["ordenObra"])) {
+    $orden = $_REQUEST["ordenObra"];
+    echo $orden;
+    $resultado = $conexion->query("SELECT * from obra ORDER BY nombre $orden");
+}
+    
 if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
 while($obra=$resultado->fetch_object("Obra")) {
     echo "<tr style='background-color:lightgreen'>";
     echo "<td>".$obra -> getIdObra()."</td>";
     echo "<td>".$obra -> getIdAutor()."</td>";
-    echo "<td>".$obra -> getNombre()."</td>";
+    echo "<td><a href='mostrarObra.php?idObra=".$obra -> getIdObra()."'>".$obra -> getNombre()."</a></td>";
     $img=$obra->getImagen();
     echo "<td><img src=$imagen$img height=200px width=200px></td>";
-    $resultado2=$conexion -> query("SELECT * from autor WHERE ".$obra -> getIdAutor()."=idAutor");
+    
+    if (! isset($_REQUEST["ordenAutor"]))
+        $resultado2=$conexion -> query("SELECT * from autor WHERE ".$obra -> getIdAutor()."=idAutor");
+        elseif (isset($_REQUEST["ordenObra"])) {
+            $orden = $_REQUEST["ordenAutor"];
+            $resultado2=$conexion -> query("SELECT * from autor WHERE ".$obra -> getIdAutor()."=idAutor $orden");
+        }
+    
+    
+    
     $autor=$resultado2->fetch_assoc();
     echo "<td>$autor[nombre]</td>";
     echo "<td><img src=$imagen$autor[imagen] height=200px width=200px></td>";
