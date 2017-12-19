@@ -1,5 +1,8 @@
 <?php 
 require "Obra.php"; 
+$resultado="";
+$orden ="";
+$id="";
 ?>
 <html>
 <head>
@@ -40,18 +43,32 @@ elseif (isset($_REQUEST["ordenObra"])) {
 } elseif (isset($_REQUEST["ordenAutor"])) {
     $orden = $_REQUEST["ordenAutor"];
     $resultado = $conexion->query("SELECT idObra, obra.nombre AS nombre, autor.nombre AS nomAutor from obra,autor WHERE autor.idAutor=obra.idAutor ORDER BY autor.nombre $orden");
+} elseif(isset($_REQUEST["idAutor"])){
+    $id=$_REQUEST['idAutor'];
+    $_SESSION["idAutor"]=$id;
+    echo "<p>$id</p>";
+    $resultado = $conexion->query("SELECT idObra, obra.idAutor, obra.nombre AS nombre, autor.nombre AS nomAutor, autor.imagen AS imagenAutor from obra,autor WHERE obra.idAutor=$id AND obra.idAutor=autor.idAutor ORDER BY idObra");
+    while($obra=$resultado->fetch_object("Obra")){
+        echo "<tr style='background-color:lightgreen'>";
+        echo "<td>Nombre Obra: " . $obra->getNombre() . "</td>";
+        echo "<td>Nombre Autor: ".$obra->getNomAutor()."</td>";
+        echo "<td>".$obra->getImagenAutor()."</td>";
+        echo "</tr>";
+        
+    }
+    
+    echo "<a href='mostrarCatalogo.php'>Cerrar filtros</a>";
 }
-if(isset($_REQUEST["idAutor"])){
-    $id=$_REQUEST["idAutor"];
-    $resultado = $conexion->query("SELECT idObra, obra.idAutor, obra.nombre AS nombre, autor.nombre AS nomAutor from obra,autor WHERE obra.idAutor=$id ORDER BY idObra");
-    echo "<a href='mostrarCatalogo.php'>Cerrar filtro de autor</a>";
-}   
-if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
-while($obra=$resultado->fetch_object("Obra")) {
-    echo "<tr style='background-color:lightgreen'>";
-    echo "<td><a href='mostrarObra.php?idObra=".$obra -> getIdObra()."'>".$obra -> getNombre()."</a></td>";
-    echo "<td><a href=mostrarCatalogo.php?idAutor=".$obra -> getIdAutor().">".$obra->getNomAutor()."</a></td>";
-    echo "</tr>";
+
+if(!isset($_SESSION["idAutor"])){
+    if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
+    while($obra=$resultado->fetch_object("Obra")) {
+        echo "<tr style='background-color:lightgreen'>";
+        echo "<td><a href='mostrarObra.php?idObra=".$obra -> getIdObra()."'>".$obra -> getNombre()."</a></td>";
+        echo "<td><a href=mostrarCatalogo.php?idAutor=".$obra -> getIdAutor().">".$obra->getNomAutor()."</a></td>";
+        echo "</tr>";
+    }
+echo "<a href='mostrarCatalogo.php'>Cerrar filtros</a>";
 }
 ?>
 </table>
