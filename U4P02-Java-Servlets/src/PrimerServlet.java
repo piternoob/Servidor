@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -35,7 +33,7 @@ public class PrimerServlet extends HttpServlet {
         out.println("<body><h1>Primer servlet</h1>");
         out.println("<h3>Me llamo ...</h3>");
         out.println("<p>Ejecución de " + request.getContextPath() + "</p>");
-        out.println("<a href='index.html'>Volver</a>");
+        out.println("<a href='./index.html'>Volver</a>");
         out.println("</body></html>");
         out.close();
 	}
