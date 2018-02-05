@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>U4P04-Java-DescriptorDeDespliegue</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>indice.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
@@ -11,11 +11,57 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>servletDeEjemploWeb</servlet-name>
-    <servlet-class>servlets.EjemploServletHttp</servlet-class>
-    <load-on-startup>1</load-on-startup>  
-</servlet>
-<servlet-mapping>
+    <servlet-class>servlet.EjemploServletHttp</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>servletDeEjemploWeb2</servlet-name>
+    <servlet-class>servlet.EjemploServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>servletDeEjemploWeb3</servlet-name>
+    <servlet-class>servlet.EjemploServletGenerico</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>servletTiempo</servlet-name>
+    <servlet-class>servlet.Tiempo</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>servletRandom</servlet-name>
+    <servlet-class>servlet.Random</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+
+  
+  <servlet-mapping>
+    <servlet-name>servletRandom</servlet-name>
+    <url-pattern>/InventaNumero</url-pattern>
+    <url-pattern>/RandomNumber</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>servletTiempo</servlet-name>
+    <url-pattern>/EscribeFecha</url-pattern>
+    <url-pattern>/ShowDate</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>servletDeEjemploWeb</servlet-name>
     <url-pattern>/EjemploServletHttp</url-pattern>
-</servlet-mapping>
+    <url-pattern>/SampleServletHttp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>servletDeEjemploWeb2</servlet-name>
+    <url-pattern>/EjemploServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>servletDeEjemploWeb3</servlet-name>
+    <url-pattern>/EjemploServletGenerico</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/errores/error404.html</location>
+  </error-page>
 </web-app>
