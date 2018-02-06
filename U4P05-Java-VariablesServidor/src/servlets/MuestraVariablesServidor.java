@@ -2,23 +2,35 @@ package servlets;
  
 import java.io.IOException;
 import java.io.PrintWriter;
- 
+import java.util.Enumeration;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns="/MuestraVariablesServidor", name="Applicasion")
+@WebServlet(urlPatterns="/MuestraVariablesServidor", 
+name="MuestraVariablesServidor", 
+loadOnStartup=1,
+initParams={
+		@WebInitParam(name="servlet1", value="uno"),
+		@WebInitParam(name="servlet2", value="dos")
+}
+)
 public class MuestraVariablesServidor extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
  
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
+        //response.setContentType("text/html");
+        //response.setCharacterEncoding("UTF-8");
+
+        response.setContentType("text/html;charset=UTF-8");
+        response.addHeader("alumno", "pedro");
         PrintWriter out = response.getWriter();
         out.println("<html><head><meta charset='UTF-8'/><title>Variables servidor</title></head>"
                 + "<style>table,td {border:solid 1px black;}</style></head>");
@@ -50,6 +62,30 @@ public class MuestraVariablesServidor extends HttpServlet {
         out.println("<tr><td>Directorio de DESPLIEGUE</td><td>" + contexto.getRealPath("/") + "</td></tr>");
         out.println("<tr><td>Nombre de la aplicación</td><td>" + contexto.getServletContextName() + "</td></tr>");
         out.println("</table>");
+        out.println("<h1>Parámetros de inicialización del servlet: "+request.getServletPath()+"</h1>");
+        
+        out.println("<table style='border-collapse: collapse;margin:10px'>");
+        out.println("<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>");
+        Enumeration <String> parametrosServlet=this.getInitParameterNames();
+        while(parametrosServlet.hasMoreElements()) {
+        	String actual=parametrosServlet.nextElement();
+        	out.println("<tr><td>"+actual+"</td><td>"+this.getInitParameter(actual)+ "</td></tr>");
+        }
+        out.println("</table>");
+        
+        out.println("<h1>Parámetros de inicialización del contexto: "+request.getServerName()+"</h1>");
+        
+        out.println("<table style='border-collapse: collapse;margin:10px'>");
+        out.println("<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>");
+        Enumeration <String> parametrosContexto=contexto.getInitParameterNames();
+        while(parametrosContexto.hasMoreElements()) {
+        	String actual=parametrosContexto.nextElement();
+        	out.println("<tr><td>"+actual+"</td><td>"+contexto.getInitParameter(actual)+ "</td></tr>");
+        }
+        out.println("</table>");
+        
+        out.println("<p>El servidor de bases de datos que utilizaremos es "+""+"</p>");
+        out.println("<p>"+"El valor del parámetro de servlet1 es"+"</p>");
         out.close();
     }
 }
