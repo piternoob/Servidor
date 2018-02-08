@@ -2,6 +2,7 @@ package servlets;
  
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Enumeration;
 
 import javax.servlet.ServletContext;
@@ -62,6 +63,7 @@ public class MuestraVariablesServidor extends HttpServlet {
         out.println("<tr><td>Directorio de DESPLIEGUE</td><td>" + contexto.getRealPath("/") + "</td></tr>");
         out.println("<tr><td>Nombre de la aplicación</td><td>" + contexto.getServletContextName() + "</td></tr>");
         out.println("</table>");
+        
         out.println("<h1>Parámetros de inicialización del servlet: "+request.getServletPath()+"</h1>");
         
         out.println("<table style='border-collapse: collapse;margin:10px'>");
@@ -84,8 +86,38 @@ public class MuestraVariablesServidor extends HttpServlet {
         }
         out.println("</table>");
         
-        out.println("<p>El servidor de bases de datos que utilizaremos es "+""+"</p>");
-        out.println("<p>"+"El valor del parámetro de servlet1 es"+"</p>");
+        out.println("<p>El servidor de bases de datos que utilizaremos es: "+contexto.getInitParameter("srv_bd")+"</p>");
+        out.println("<p>El valor del parámetro de servlet1 es: "+this.getInitParameter("servlet1")+"</p>");
+        
+        out.println("<h1>Parámetros  de la request:</h1>");
+        //http://localhost:8080/U4P05-Java-VariablesServidor/MuestraVariablesServidor?orden=ascendente&idioma=es
+        
+        out.println("<table style='border-collapse: collapse;margin:10px'>");
+        out.println("<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>");
+        Enumeration <String> parametrosRequest=request.getParameterNames();
+        while(parametrosRequest.hasMoreElements()) {
+        	String actual=parametrosRequest.nextElement();
+        	out.println("<tr><td>"+actual+"</td><td>"+request.getParameter(actual)+ "</td></tr>");
+        }
+        out.println("</table>");
+        
+        out.println("<h1>Atributos  de la request:</h1>");
+        //http://localhost:8080/U4P05-Java-VariablesServidor/MuestraVariablesServidor?orden=ascendente&idioma=es
+        
+        request.setAttribute("fecha", new Date());
+        request.setAttribute("autor", "Pedro");
+ 
+        out.println("<table style='border-collapse: collapse;margin:10px'>");
+        out.println("<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>");
+        Enumeration <String> atributosRequest=request.getAttributeNames();
+        while(atributosRequest.hasMoreElements()) {
+        	String actual=atributosRequest.nextElement();
+        	out.println("<tr><td>"+actual+"</td><td>"+request.getAttribute(actual)+ "</td></tr>");
+        }
+        out.println("</table>");
+        
+        out.println("<a href='./index.html'>Volver</a>");
+        
         out.close();
     }
 }
