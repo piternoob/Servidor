@@ -64,6 +64,7 @@ public class ProcesarDatosServlet extends HttpServlet {
         out.println("</ul>");
        
         out.println("<a href='./index.html'>Volver</a>");
+        out.println("</body></html>");
         out.close();
 		
 	}
