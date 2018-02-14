@@ -34,15 +34,18 @@ public class ValidarSorpresaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+		
        
-        boolean nombre=false, numero=false, color=true;
+        boolean nombre=false, numero=false, color=false;
+        String nm="", col="";
         int num=-1;
         
         //nombre
-        if(request.getParameter("nombre")!="") 
+        if(request.getParameter("nomb")!="") {
         	nombre=true;
+        	nm=request.getParameter("nomb");
+        }
+        	
         
         //numero
         if(request.getParameter("max")!=""){
@@ -51,15 +54,25 @@ public class ValidarSorpresaServlet extends HttpServlet {
 				numero=true;
 		}
         
+        //color
+        if(request.getParameter("color")!="") {
+        	color=true;
+        	col=request.getParameter("color");
+        }
+        
         if(nombre && numero && color) {
         	int a=(int)(Math.random()*num);
-        	request.setAttribute("nomb", request.getParameter("nomb"));
-        	request.setAttribute("numero", a);
+        	request.setAttribute("nom", nm);
+        	request.setAttribute("dig", a);
             request.setAttribute("color", request.getParameter("color"));
         
-            RequestDispatcher rd=request.getRequestDispatcher("MostrarNumero");
+            RequestDispatcher rd=request.getRequestDispatcher("VerNumero");
             rd.forward(request, response);
+            
+            
         } else {
+        	response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
         	out.println("<p>Los datos no son correctos.</p>");
         	out.println("<a href='./index.html'>Volver</a>");
         }
