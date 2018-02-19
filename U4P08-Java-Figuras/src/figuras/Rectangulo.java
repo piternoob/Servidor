@@ -19,6 +19,6 @@ public class Rectangulo extends Figura{
 
 	@Override
 	public String toString() {
-		return "Rectangulo [ladoX=" + ladoX + ", ladoY=" + ladoY + "]";
+		return super.toString()+"Rectangulo [ladoX=" + ladoX + ", ladoY=" + ladoY + "]";
 	}
 }

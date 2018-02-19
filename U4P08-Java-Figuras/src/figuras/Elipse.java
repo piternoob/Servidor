@@ -20,7 +20,7 @@ public class Elipse extends Figura{
 
 	@Override
 	public String toString() {
-		return "Elipse [radioX=" + radioX + ", radioY=" + radioY + "]";
+		return super.toString()+"Elipse [radioX=" + radioX + ", radioY=" + radioY + "]";
 	}
 	
 

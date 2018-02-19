@@ -15,7 +15,7 @@ public class Cuadrado extends Figura{
 
 	@Override
 	public String toString() {
-		return "Cuadrado [lado=" + lado + "]";
+		return super.toString()+"Cuadrado [lado=" + lado + "]";
 	}
 	
 	

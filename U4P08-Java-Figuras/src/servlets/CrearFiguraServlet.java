@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,48 +32,29 @@ public class CrearFiguraServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-			
-		if(request.getParameter("lado")!="") {
-			Cuadrado c=new Cuadrado(Color.Amarillo, Integer.parseInt(request.getParameter("lado")));
+		String tipo="";
+		boolean swL=false, swR=false;
+		
+		if(request.getParameter("ladoX")!="" || request.getParameter("ladoY")!="") swL=true;
+		
+		if(request.getParameter("radioX")!="" || request.getParameter("radioY")!="" ) swR=true;
+
+		if(swL || swR) {
+
+			if(request.getParameter("ladoX")!="" && request.getParameter("ladoY")=="" && !swR) tipo="Cuadrado";
+				else if (request.getParameter("ladoX")!="" && request.getParameter("ladoY")!="" && !swR) tipo="Rectangulo";
+
+			if(request.getParameter("radioX")!="" && request.getParameter("radioY")=="" && !swL) tipo="Circunferencia";
+				else if(request.getParameter("radioX")!="" && request.getParameter("radioY")!="" && !swL) tipo="Elipse";
+
+			if(tipo!="") {
+				request.setAttribute("tipo", tipo);
+				RequestDispatcher rd=request.getRequestDispatcher("MostrarFigura");
+				rd.forward(request, response);
+			} else 
+				response.sendRedirect("./index.html");
+		
 		}
-		if(request.getParameter("ladoX")!="" && request.getParameter("ladoY")!="") {
-			Rectangulo r=new Rectangulo(Color.Amarillo, Integer.parseInt(request.getParameter("ladoX")), Integer.parseInt(request.getParameter("ladoY")));
-		}
-		
-		if(request.getParameter("radio")!="") {
-			Circunferencia c=new Circunferencia(Color.Amarillo, Integer.parseInt(request.getParameter("radio")));
-		}
-		if(request.getParameter("radioX")!="" && request.getParameter("radioY")!="") {
-			Elipse e=new Elipse(Color.Amarillo, Integer.parseInt(request.getParameter("radioX")), Integer.parseInt(request.getParameter("radioY")));
-		}
-	
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*switch (sw) {
-		case "lado":break;
-		case "ladoX": case "ladoX": break;
-		case "radio": break;
-		case "radioX":case "radioY":break;
-		}*/
-		
-		
-		
-		
 		
 		
 	}
@@ -82,5 +66,9 @@ public class CrearFiguraServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	
+	
+	
 
 }

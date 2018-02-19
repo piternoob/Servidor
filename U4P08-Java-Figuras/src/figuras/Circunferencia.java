@@ -14,7 +14,7 @@ public class Circunferencia extends Figura{
 
 	@Override
 	public String toString() {
-		return "Circunferencia [radio=" + radio + "]";
+		return super.toString()+"Circunferencia [radio=" + radio + "]";
 	}
 	
 	
