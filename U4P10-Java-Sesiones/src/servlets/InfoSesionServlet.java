@@ -31,6 +31,9 @@ public class InfoSesionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		
+		
 		// TODO Auto-generated method stub
 		// Crear una sesión o recuperar la existente si se encuentra la cookie de sesión
 		HttpSession session = request.getSession();
@@ -43,16 +46,15 @@ public class InfoSesionServlet extends HttpServlet {
     	}
 		
 		int contador = 0;
-		String mensaje="";
 		// Comprobar si es la primera vez
 		if (session.isNew()) {
 			session.setAttribute("contador", 0);
-			mensaje="Esta es tu primera visita, se ha creado una sesión";
+			session.setAttribute("primera", "soy nuevo");
 		} else {
-		  contador = (int) session.getAttribute("contador");
+		  contador = (int) session.getAttribute("contador") ;
 		  contador++;
 		  session.setAttribute("contador", contador);
-		  mensaje="No es una sesion nueva";
+		  session.removeAttribute("primera");
 		  
 		}
 		 
@@ -71,10 +73,10 @@ public class InfoSesionServlet extends HttpServlet {
 		            "<li> Identificador: " + session.getId() + "</li>\n" +
 		            "<li> Fecha de creación: " + fechaInicioSesion + "</li>\n" +
 		            "<li> Fecha de último acceso: " + fechaUltimoAcceso + "</li>\n" +
-		            "<li> Número de visitas: " + contador + "</li>\n" +
-		            "<li> ¿Nuevo? " + mensaje + "</li>\n" +
-		            "</ul>" +
-		        "<p><a href='" + request.getRequestURI() + "'>Refrescar</a></p>");
+		            "<li> Número de visitas: " + contador + "</li>\n");
+		if(session.getAttribute("primera"))
+			out.println("<li> ¿Nuevo? " + session.getAttribute("primera") + "</li>\n" +"</ul>");
+		out.println("<p><a href='" + request.getRequestURI() + "'>Refrescar</a></p>");
 
 		out.println("<p><a href='" + request.getRequestURI() + "?reiniciarSesion=true'>Borrar la sesión</a></p>");
 
@@ -83,6 +85,9 @@ out.println("<p><a href='" + response.encodeURL(request.getRequestURI())+ "'>Ref
 
 		out.println("</body></html>");
 		out.close();
+		
+		
+		
 	}
 
 	/**

@@ -17,4 +17,14 @@
     <servlet-name>SaludoServlet</servlet-name>
     <url-pattern>/Saludo</url-pattern>
   </servlet-mapping>
+  <!-- <filter>
+    <filter-name>FiltroDeRegistro</filter-name>
+    <filter-class>filters.LogFilter</filter-class>
+  </filter> -->
+  <filter-mapping>
+    <filter-name>FiltroDeRegistro</filter-name>
+    <servlet-name>SaludoServlet</servlet-name>
+    <servlet-name>FechaServlet</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </filter-mapping>
 </web-app>
