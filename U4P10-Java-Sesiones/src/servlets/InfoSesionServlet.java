@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class InfoSesionServlet
  */
-@WebServlet("/InfoSesionServlet")
+@WebServlet("/InfoSesion")
 public class InfoSesionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -77,6 +77,10 @@ public class InfoSesionServlet extends HttpServlet {
 		        "<p><a href='" + request.getRequestURI() + "'>Refrescar</a></p>");
 
 		out.println("<p><a href='" + request.getRequestURI() + "?reiniciarSesion=true'>Borrar la sesión</a></p>");
+
+out.println("<p><a href='" + response.encodeURL(request.getRequestURI())+ "'>Refrescar con reescritura de URL</a></p>");
+
+
 		out.println("</body></html>");
 		out.close();
 	}
