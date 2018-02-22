@@ -15,18 +15,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Servlet Filter implementation class LogFilter
  */
-//@WebFilter("/LogFilter")
 //@WebFilter(urlPatterns = "/Saludo")
 //@WebFilter(servletNames="SaludoServlet")
+//@WebFilter(servletNames= {"SaludoServlet","FechaServlet"})
 @WebFilter(filterName="FiltroDeRegistro")
 public class LogFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-	public LogFilter() {
-		// TODO Auto-generated constructor stub
-	}
+    public LogFilter() {
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see Filter#destroy()
@@ -40,21 +40,13 @@ public class LogFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
-
 		if (request instanceof HttpServletRequest) 
 			System.out.println("Petición:" + ((HttpServletRequest)request).getRequestURL().toString());
-
 		PrintWriter out = response.getWriter();
 		out.println("<p>Mensaje 1: Estamos aplicando el filtro de registro</p>");
-
-		
-
 		chain.doFilter(request, response);
-		out.println("<p>Mensaje 2: De vuelta en el filtro tras ejecutar el resto de la cadena</p>");
-		//response.setContentType("text/html;UTF-8");
+		//out.println("<p>Mensaje 2: De vuelta en el filtro tras ejecutar el resto de la cadena</p>");
+
 	}
 
 	/**

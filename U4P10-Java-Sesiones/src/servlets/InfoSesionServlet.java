@@ -31,9 +31,6 @@ public class InfoSesionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-		
 		// TODO Auto-generated method stub
 		// Crear una sesión o recuperar la existente si se encuentra la cookie de sesión
 		HttpSession session = request.getSession();
@@ -49,9 +46,9 @@ public class InfoSesionServlet extends HttpServlet {
 		// Comprobar si es la primera vez
 		if (session.isNew()) {
 			session.setAttribute("contador", 0);
-			session.setAttribute("primera", "soy nuevo");
+			session.setAttribute("primera", "es mi primera vez");
 		} else {
-		  contador = (int) session.getAttribute("contador") ;
+		  contador = (int) session.getAttribute("contador");
 		  contador++;
 		  session.setAttribute("contador", contador);
 		  session.removeAttribute("primera");
@@ -73,10 +70,11 @@ public class InfoSesionServlet extends HttpServlet {
 		            "<li> Identificador: " + session.getId() + "</li>\n" +
 		            "<li> Fecha de creación: " + fechaInicioSesion + "</li>\n" +
 		            "<li> Fecha de último acceso: " + fechaUltimoAcceso + "</li>\n" +
-		            "<li> Número de visitas: " + contador + "</li>\n");
-		if(session.getAttribute("primera"))
-			out.println("<li> ¿Nuevo? " + session.getAttribute("primera") + "</li>\n" +"</ul>");
-		out.println("<p><a href='" + request.getRequestURI() + "'>Refrescar</a></p>");
+		            "<li> Número de visitas: " + contador + "</li>");
+		if(session.getAttribute("primera")!=null)
+		out.println("<li> ¿Nuevo? " + session.getAttribute("primera") + "</li>");
+		
+		out.println("</ul><p><a href='" + request.getRequestURI() + "'>Refrescar</a></p>");
 
 		out.println("<p><a href='" + request.getRequestURI() + "?reiniciarSesion=true'>Borrar la sesión</a></p>");
 
@@ -85,9 +83,6 @@ out.println("<p><a href='" + response.encodeURL(request.getRequestURI())+ "'>Ref
 
 		out.println("</body></html>");
 		out.close();
-		
-		
-		
 	}
 
 	/**
