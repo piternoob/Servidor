@@ -41,13 +41,9 @@ public class ContadorFilter implements Filter {
 		ServletContext contexto=request.getServletContext();
 		int numero=0;
 		
-		if(contexto.getAttribute("numero")!=null) {
+		if(contexto.getAttribute("numero")!=null)
 			numero=Integer.parseInt((contexto.getAttribute("numero")).toString())+1;
-			contexto.setAttribute("numero", numero);
-		}else {
-			contexto.setAttribute("numero", numero);
-		}
-		
+		contexto.setAttribute("numero", numero);
 		
 		chain.doFilter(request, response);
 	}
