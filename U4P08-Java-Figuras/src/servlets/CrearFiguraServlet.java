@@ -32,31 +32,24 @@ public class CrearFiguraServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String tipo="";
-		boolean swL=false, swR=false;
+		boolean sw=false;
+		int ladoX=-1, ladoY=-1, radioX=-1,radioY=-1;
+		Figura f=null;
 		
-		if(request.getParameter("ladoX")!="" || request.getParameter("ladoY")!="") swL=true;
+		if(request.getParameter("ladoX")!="") ladoX=Integer.parseInt(request.getParameter("ladoX")); 
+		if(request.getParameter("ladoY")!="") ladoY=Integer.parseInt(request.getParameter("ladoY")); 
+		if(request.getParameter("radioX")!="") radioX=Integer.parseInt(request.getParameter("radioX")); 
+		if(request.getParameter("radioY")!="") radioY=Integer.parseInt(request.getParameter("radioY"));
 		
-		if(request.getParameter("radioX")!="" || request.getParameter("radioY")!="" ) swR=true;
-
-		if(swL || swR) {
-
-			if(request.getParameter("ladoX")!="" && request.getParameter("ladoY")=="" && !swR) tipo="Cuadrado";
-				else if (request.getParameter("ladoX")!="" && request.getParameter("ladoY")!="" && !swR) tipo="Rectangulo";
-
-			if(request.getParameter("radioX")!="" && request.getParameter("radioY")=="" && !swL) tipo="Circunferencia";
-				else if(request.getParameter("radioX")!="" && request.getParameter("radioY")!="" && !swL) tipo="Elipse";
-
-			if(tipo!="") {
-				request.setAttribute("tipo", tipo);
-				RequestDispatcher rd=request.getRequestDispatcher("MostrarFigura");
-				rd.forward(request, response);
-			} else 
-				response.sendRedirect("./index.html");
-		
+		if(sw) {if(ladoX!=-1 && ladoY==-1 && radioX==-1 && radioY==-1) f=new Cuadrado(Color.Amarillo, ladoX);
+			if(ladoX!=-1 && ladoY!=-1 && radioX==-1 && radioY==-1) f=new Rectangulo(Color.Amarillo, ladoX, ladoY);
+			if(ladoX==-1 && ladoY==-1 && radioX!=-1 && radioY==-1) f=new Circunferencia(Color.Amarillo, radioX);
+			if(ladoX==-1 && ladoY==-1 && radioX!=-1 && radioY!=-1) f=new Elipse(Color.Amarillo, radioX, radioY);
 		}
-		
-		
+		if(f!=null) request.setAttribute("figura", f);
+			else request.setAttribute("error", "No se puede crear la figura.");
+		RequestDispatcher rd=request.getRequestDispatcher("MostrarFigura");
+		rd.forward(request, response);
 	}
 
 	/**
