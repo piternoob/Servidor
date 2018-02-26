@@ -89,7 +89,7 @@ public class MostrarAnimalesServlet extends HttpServlet {
 		} catch (Exception e) {
 		  e.printStackTrace();
 		}
-
+		out.println("<p><a href='./'>Index</a></p>");
 		out.println("</body></html>");
 	}
 
