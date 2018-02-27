@@ -32,22 +32,33 @@ public class CrearFiguraServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		boolean sw=false;
-		int ladoX=-1, ladoY=-1, radioX=-1,radioY=-1;
+		int ladoX=0, ladoY=0, radioX=0,radioY=0;
 		Figura f=null;
+		Color color=null;
+		String mensaje="";
 		
-		if(request.getParameter("ladoX")!="") ladoX=Integer.parseInt(request.getParameter("ladoX")); 
-		if(request.getParameter("ladoY")!="") ladoY=Integer.parseInt(request.getParameter("ladoY")); 
-		if(request.getParameter("radioX")!="") radioX=Integer.parseInt(request.getParameter("radioX")); 
-		if(request.getParameter("radioY")!="") radioY=Integer.parseInt(request.getParameter("radioY"));
 		
-		if(sw) {if(ladoX!=-1 && ladoY==-1 && radioX==-1 && radioY==-1) f=new Cuadrado(Color.Amarillo, ladoX);
-			if(ladoX!=-1 && ladoY!=-1 && radioX==-1 && radioY==-1) f=new Rectangulo(Color.Amarillo, ladoX, ladoY);
-			if(ladoX==-1 && ladoY==-1 && radioX!=-1 && radioY==-1) f=new Circunferencia(Color.Amarillo, radioX);
-			if(ladoX==-1 && ladoY==-1 && radioX!=-1 && radioY!=-1) f=new Elipse(Color.Amarillo, radioX, radioY);
+		
+		if(request.getParameter("ladoX")!=null) ladoX=Integer.parseInt(request.getParameter("ladoX")); 
+		if(request.getParameter("ladoY")!=null) ladoY=Integer.parseInt(request.getParameter("ladoY")); 
+		if(request.getParameter("radioX")!=null) radioX=Integer.parseInt(request.getParameter("radioX")); 
+		if(request.getParameter("radioY")!=null) radioY=Integer.parseInt(request.getParameter("radioY"));
+		
+		switch (request.getParameter("color")) {
+			case "Amarillo": color=Color.Amarillo; break;
+			case "Azul": color=Color.Azul; break;
+			case "Naranja": color=Color.Naranja; break;
+			case "Rojo": color=Color.Rojo; break;
+			case "Verde": color=Color.Verde; break;
 		}
+		
+		if(ladoX!=0 && ladoY==0 && radioX==0 && radioY==0) f=new Cuadrado(color, ladoX);
+		if(ladoX!=0 && ladoY!=0 && radioX==0 && radioY==0) f=new Rectangulo(color, ladoX, ladoY);
+		if(ladoX==0 && ladoY==0 && radioX!=0 && radioY==0) f=new Circunferencia(color, radioX);
+		if(ladoX==0 && ladoY==0 && radioX!=0 && radioY!=0) f=new Elipse(color, radioX, radioY);
+		
 		if(f!=null) request.setAttribute("figura", f);
-			else request.setAttribute("error", "No se puede crear la figura.");
+			else request.setAttribute("error", "Error al crear la figura");
 		RequestDispatcher rd=request.getRequestDispatcher("MostrarFigura");
 		rd.forward(request, response);
 	}
@@ -61,7 +72,12 @@ public class CrearFiguraServlet extends HttpServlet {
 	}
 	
 	
-	
+	public int crearInts(HttpServletRequest request,int valor) {
+		
+		if(request.getParameter(valor)!=null) ladoX=Integer.parseInt(request.getParameter("ladoX")); 
+		
+		return valor;
+	}
 	
 
 }

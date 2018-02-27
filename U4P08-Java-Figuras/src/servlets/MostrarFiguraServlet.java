@@ -37,7 +37,7 @@ public class MostrarFiguraServlet extends HttpServlet {
     		out.println("<html><head><meta charset='UTF-8'/><title>Atributo request</title></head>");
     		out.println("<body><h1>Figura</h1>");
     		if(request.getAttribute("error")!=null) {
-    			out.println("<p>"+request.getAttribute("error")+"</h1>");
+    			out.println("<p>"+request.getAttribute("error")+"</p>");
     		}
     		if(request.getAttribute("figura")!=null) {
     			out.println("<p>"+request.getAttribute("figura").toString()+"</p>");

@@ -1,7 +1,8 @@
 package figuras;
 
 public class Circunferencia extends Figura{
-	public int radio;
+	
+	private int radio;
 
 	public Circunferencia(Color color, int radio) {
 		super.setColor(color);

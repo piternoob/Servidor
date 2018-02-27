@@ -2,7 +2,7 @@
 package figuras;
 
 public class Elipse extends Figura{
-	public int radioX, radioY;
+	private int radioX, radioY;
 
 	public Elipse(Color color, int radioX, int radioY) {
 		super.setColor(color);

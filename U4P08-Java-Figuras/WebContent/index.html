@@ -7,10 +7,17 @@
 <body>
 <h1>Formulario 1</h1>
 <form action="/U4P08-Java-Figuras/CrearFigura" method="post">
-	Lado X: <input type="number" name="ladoX"><br>
-	Lado Y: <input type="number" name="ladoY"><br>
-	RadioX: <input type="number" name="radioX"><br>
-	RadioY: <input type="number" name="radioY"><br>
+	Lado X: <input type="number" name="ladoX" value="0" min="0"><br>
+	Lado Y: <input type="number" name="ladoY" value="0" min="0"><br>
+	RadioX: <input type="number" name="radioX" value="0" min="0"><br>
+	RadioY: <input type="number" name="radioY" value="0" min="0"><br>
+	<select name="color">
+		<option>Amarillo</option>
+		<option>Azul</option>
+		<option>Naranja</option>
+		<option>Rojo</option>
+		<option>Verde</option>
+	</select>
 	<input type="submit" value="Submit">
 	<input type="reset" value="Reset"><br>
 </form>
