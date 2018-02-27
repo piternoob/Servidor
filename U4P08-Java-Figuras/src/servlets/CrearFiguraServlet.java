@@ -34,10 +34,7 @@ public class CrearFiguraServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		int ladoX=0, ladoY=0, radioX=0,radioY=0;
 		Figura f=null;
-		Color color=null;
-		String mensaje="";
-		
-		
+		Color color=null;		
 		
 		if(request.getParameter("ladoX")!=null) ladoX=Integer.parseInt(request.getParameter("ladoX")); 
 		if(request.getParameter("ladoY")!=null) ladoY=Integer.parseInt(request.getParameter("ladoY")); 
@@ -59,6 +56,7 @@ public class CrearFiguraServlet extends HttpServlet {
 		
 		if(f!=null) request.setAttribute("figura", f);
 			else request.setAttribute("error", "Error al crear la figura");
+		
 		RequestDispatcher rd=request.getRequestDispatcher("MostrarFigura");
 		rd.forward(request, response);
 	}
@@ -69,14 +67,6 @@ public class CrearFiguraServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-	
-	
-	public int crearInts(HttpServletRequest request,int valor) {
-		
-		if(request.getParameter(valor)!=null) ladoX=Integer.parseInt(request.getParameter("ladoX")); 
-		
-		return valor;
 	}
 	
 
