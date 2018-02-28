@@ -151,7 +151,7 @@ public class MostrarCatalogoServlet extends HttpServlet {
     	}
 
     	out.print("<a href=MostrarCatalogo>Eliminar filtros</a></br>");
-    	out.print("<a href=./index.html>Index</a></br>");
+    	out.print("<a href=./index.html>Index</a>");
     	out.println("</body></html>");
 
     }
