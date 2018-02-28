@@ -1,3 +1,4 @@
+package servlets;
 public class Obra {
 	private String nombre, imagenObra, nomAutor, imagenAutor;
 	private int idObra, idAutor;

@@ -8,26 +8,5 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
-    <welcome-file></welcome-file>
   </welcome-file-list>
-  <context-param>
-  	<param-name>usuario_r</param-name>
-  	<param-value>alumno</param-value>
-  </context-param>
-  <context-param>
-  	<param-name>password_r</param-name>
-  	<param-value>alumno</param-value>
-  </context-param>
-  <context-param>
-  	<param-name>usuario_rw</param-name>
-  	<param-value>alumno</param-value>
-  </context-param>
-  <context-param>
-  	<param-name>password_rw</param-name>
-  	<param-value>dwes</param-value>
-  </context-param>
-  <context-param>
-	<param-name>url</param-name>
-  	<param-value>jdbc:mariadb://localhost/catalogo10</param-value>
-  </context-param>
 </web-app>
