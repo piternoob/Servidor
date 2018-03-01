@@ -50,9 +50,9 @@ public class AltaServlet extends HttpServlet {
 					Class.forName("org.mariadb.jdbc.Driver").newInstance();
 
 					// Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
-					String userName = contexto.getInitParameter("usr_db_r");
-					String password = contexto.getInitParameter("psw_db_r");
-					String url = contexto.getInitParameter("srv_db")+"/catalogo11";
+					String userName = contexto.getInitParameter("usr_db_rw");
+					String password = contexto.getInitParameter("psw_db_rw");
+					String url = contexto.getInitParameter("srv_db")+"/catalogo10";
 					conn = DriverManager.getConnection(url, userName, password);
 
 					// Paso 3: Crear sentencias SQL, utilizando objetos de tipo Statement
@@ -66,8 +66,7 @@ public class AltaServlet extends HttpServlet {
 
 					String consultaComprobacion = "SELECT * from usuario WHERE login='" + username + "'";
 					String consultaAlta = "INSERT INTO `usuario` (`login`, `password`, `nombre`, `admin`, `descripcion`) VALUES ('"
-							+ username + "', '" + pass + "', '" + nombre + "' , '" + admin + "', '" + descripcion
-							+ "');";
+							+ username + "', '" + pass + "', '" + nombre + "' , '" + admin + "', '" + descripcion + "');";
 					ResultSet rset = sentencia.executeQuery(consultaComprobacion);
 					
 					
@@ -83,9 +82,9 @@ public class AltaServlet extends HttpServlet {
 			}
 
 		} else {
-			out.println("<html><head><meta charset='UTF-8'/>" + "<style> .error {color: red}</style>"
-					+ "<title>Catálogo de Jose Maria Fernandez</title></head><body>");
-						out.println("<h3>Alta de usuario</h3>");
+			out.println("<html><head><meta charset='UTF-8'/>" + "<style> .error {color: red}</style>" 
+					+ "<title>Catálogo</title></head><body>");
+			out.println("<h3>Alta de usuario</h3>");
 			out.println("<form action='" + request.getRequestURI() + "' method='post'>"
 					+ "<label>Usuario:</label><input type='text' name='username'><br/>\n"
 					+ "<label>Contraseña:</label><input type='password' name='password'><br/>\n"

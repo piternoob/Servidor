@@ -2,41 +2,22 @@ package modelo;
 
 public class Autor {
 
-	private String id;
-	private String nombre;
-	private String nacionalidad;
-	private String imag;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getNacionalidad() {
-		return nacionalidad;
-	}
-	public void setNacionalidad(String nacionalidad) {
-		this.nacionalidad = nacionalidad;
-	}
-	public String getImag() {
-		return imag;
-	}
-	public void setImag(String imag) {
-		this.imag = imag;
-	}
-	public Autor(String id, String nombre, String nacionalidad, String imag) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.nacionalidad = nacionalidad;
-		this.imag = imag;
+	private String nomAutor, imagenAutor;
+	private int idAutor;
+	
+	public Autor(String nomAutor, String imagenAutor, int idAutor) {
+		this.nomAutor=nomAutor;
+		this.imagenAutor=imagenAutor;
+		this.idAutor=idAutor;
 	}
 	
+	public String getNomAutor() {return nomAutor;}
+	public void setNomAutor(String nomAutor) {this.nomAutor = nomAutor;}
+	
+	public String getImagenAutor() {return "<img src='/U5P03-Java-Autenticacion/img/"+imagenAutor+"'height=200px width=200px>";}
+	public void setImagenAutor(String imagenAutor) {this.imagenAutor = imagenAutor;}
+	
+	public int getIdAutor() {return idAutor;}
+	public void setIdAutor(int idAutor) {this.idAutor = idAutor;}
 	
 }

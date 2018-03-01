@@ -1,17 +1,11 @@
 package servlets;
 
-
-import modelo.Obra;
-import modelo.Autor;
-import modelo.Usuario;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,10 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.Autor;
+import modelo.Obra;
+import modelo.Usuario;
+
 /**
- * Servlet implementation class MostrarCatalogo
+ * Servlet implementation class MostrarCatalogoServlet
  */
-//@WebServlet("/MostrarCatalogo")
+@WebServlet("/MostrarCatalogo")
 public class MostrarCatalogoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -39,143 +37,139 @@ public class MostrarCatalogoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext contexto = getServletContext();
-		response.setContentType("text/html;UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<html><head><meta charset='UTF-8'/></head><body>");
-		
-		Connection conn = null;
-		Statement sentencia = null;
-		
-		try {
-		  // Paso 1: Cargar el driver JDBC.
-		 Class.forName("org.mariadb.jdbc.Driver").newInstance();
-
-		  // Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
-		  String userName = contexto.getInitParameter("usr_db_r");
-		  String password = contexto.getInitParameter("psw_db_r");
-		  String ur=contexto.getInitParameter("srv_db");
-		  String url = ur+"/catalogo11";
-
-		  conn = DriverManager.getConnection(url, userName, password);
-
-		  // Paso 3: Crear la sentencia SQL
-		  sentencia = conn.createStatement();
-		  
-
-		  // Paso 4: Ejecutar la sentencia SQL a través de los objetos Statement
-		  String order="";
-		  if(request.getParameter("op")!=null) {
-		  if(request.getParameter("op").equalsIgnoreCase("1")) {
-			  order="ORDER BY titulo;";
-		  	}else if(request.getParameter("op").equalsIgnoreCase("2")){
-			  order="ORDER BY titulo DESC;";
-		  	}else if(request.getParameter("op").equalsIgnoreCase("3")){
-				  order="ORDER BY nombre;";
-		  	}else if(request.getParameter("op").equalsIgnoreCase("4")){
-				  order="ORDER BY nombre DESC;";
-		  	}
-		  }
-		  
-		  String consulta = "SELECT * from obra,autor WHERE obra.id_autor=autor.id "+order;
-		  
-		  
-		  ResultSet rset = sentencia.executeQuery(consulta);
-
-		   // Paso 5: Mostrar resultados
-		  if (!rset.isBeforeFirst() ) {    
-			    out.println("<h3>No hay resultados</p>");
-			}
-		  
-		  
-		  if(request.getParameter("titulo")!=null) {
-			  String tit=request.getParameter("titulo");
-			  String consulta2 = "SELECT * from obra,autor WHERE obra.id_autor=autor.id AND obra.titulo LIKE '%"+tit+"%'";
-			  ResultSet rset2 = sentencia.executeQuery(consulta2);
-			  
-			  if (!rset2.isBeforeFirst() ) {    
-				    out.println("<h3>No hay resultados</p>");
-				}
-			  
-			  out.println("<table style='border:'5px''>");
-			  out.println("<tr style='background-color:lightblue'><td>Titulo</td><td>Autor</td><td>Imagen</td></tr>");
-			  while (rset2.next()) {
-				 Obra obra3=new Obra(rset2.getString("id_obra"), rset2.getString("titulo"), rset2.getString("id_autor"), rset2.getString("genero"), rset2.getString("descripcion"), rset2.getString("año"), rset2.getString("imagen"), rset2.getString("nombre"));
-				
-				out.println("<tr style='background-color:orange'>");
-			    out.println("<td>" + obra3.getTitulo() + "</td><td> " + obra3.getNombre() + "</td><td><img src='./img/"+obra3.getImagen()+"' width=100 heigh=100></td></tr>");
-			  }
-			  out.println("</table>");
-			  
-		  }else  if(request.getParameter("id_autor")==null) {
-		
-		  out.println("<table style='border:'5px''>");
-		  out.println("<tr style='background-color:lightblue'><td>Titulo<a href=MostrarCatalogo?op=1>&#9650;</a><a href=MostrarCatalogo?op=2>&#9660;</a></td>"
-		  		+ "<td>Autor<a href=MostrarCatalogo?op=3>&#9650;</a><a href=MostrarCatalogo?op=4>&#9660;</a></td>"
-		  		+ "<td>Imagen</td></tr>");
-		  while (rset.next()) {
-			 Obra obra=new Obra(rset.getString("id_obra"), rset.getString("titulo"), rset.getString("id_autor"), rset.getString("genero"), rset.getString("descripcion"), rset.getString("año"), rset.getString("imagen"), rset.getString("nombre"));
-			
-			out.println("<tr style='background-color:orange'>");
-		    out.println("<td>" +"<a href=MostrarObra?id_obra='"+obra.getId_obra()+"'>"+obra.getTitulo() + "</td><td><a href=MostrarCatalogo?id_autor='"+obra.getId_autor()+"'>"+obra.getNombre()+"</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
-		  }
-		  out.println("</table>");
-		  
-		  }else if(request.getParameter("id_autor")!=null){
-			  String id_autor=request.getParameter("id_autor");
-			  String consulta1 = "SELECT * from obra,autor WHERE obra.id_autor=autor.id AND autor.id="+id_autor;
-			  ResultSet rset1 = sentencia.executeQuery(consulta1);
-			  
-			  if (!rset1.isBeforeFirst() ) {    
-				    out.println("<h3>No hay resultados</p>");
-				}
-			  
-			  out.println("<table style='border:'5px''>");
-			  out.println("<tr style='background-color:lightblue'><td>Foto</td><td>Titulo<a href=MostrarCatalogo?op=1>&#9650;</a><a href=MostrarCatalogo?op=2>&#9660;</a></td>"
-			  		+ "<td>Autor<a href=MostrarCatalogo?op=3>&#9650;</a><a href=MostrarCatalogo?op=4>&#9660;</a></td>"
-			  		+ "<td>Nacionalidad</td><td>Imagen</td></tr>");
-			  while (rset1.next()) {
-				 Obra obra1=new Obra(rset1.getString("id_obra"), rset1.getString("titulo"), rset1.getString("id_autor"), rset1.getString("genero"), rset1.getString("descripcion"), rset1.getString("año"), rset1.getString("imagen"), rset1.getString("nombre"));
-				 Autor autor=new Autor(rset1.getString("id"),rset1.getString("nombre"),rset1.getString("nacionalidad"),rset1.getString("imag"));
-				out.println("<tr style='background-color:orange'>");
-			    out.println("<td><img src='./img/"+autor.getImag()+"' width=100 heigh=100></td><td>" +"<a href=MostrarObra?id_obra='"+obra1.getId_obra()+"'>"+obra1.getTitulo() + "</td><td> " + obra1.getNombre() + "</td><td>"+autor.getNacionalidad()+"</td><td><img src='./img/"+obra1.getImagen()+"' width=100 heigh=100></td></tr>");
-			  }
-			  out.println("</table>");
-			  
-		  } 
-			 
-		  
-		  
-		  out.println("<form action='MostrarCatalogo' method='post'><br/>");
-		    out.println("<label>Buscar: </label>");
-		    out.println("<input type='text' name='titulo'>");
-		    out.println("<input type='submit' value='Enviar' name='enviar'>");
-		  out.println("</form>");
-		  
-		  
-
-		  // Paso 6: Desconexión
-		  if (sentencia != null)
-		    sentencia.close();
-		  if (conn != null)
-		    conn.close();
-		
-	
-		out.print("<a href=MostrarCatalogo>Eliminar filtros");
-		
-		HttpSession session = request.getSession();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	// TODO Auto-generated method stub
+    	HttpSession session = request.getSession();
+    	ServletContext contexto = getServletContext();
+    	PrintWriter out = response.getWriter();
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
-		out.println("<h4>Sesión iniciada como <a href='"+request.getRequestURI()+"Cuenta'>" 
-			+ usuario.getNombre() + "</a></h4>");
 		
-			} catch (Exception e) {
-			  e.printStackTrace();
-			}
-		out.println("</body></html>");
-		
-	}
+    	response.setContentType("text/html;UTF-8");
+    	out.println("<h1>Sesión iniciada como <a href='"+contexto.getContextPath()+"/Cuenta'>" + usuario.getNombre() + "</a></h1>");
+		out.println("<html><head><meta charset='UTF-8'/></head><body>");
 
+    	Connection conn = null;
+    	Statement sentencia = null;
+
+    	try {
+    		// Paso 1: Cargar el driver JDBC.
+    		Class.forName("org.mariadb.jdbc.Driver").newInstance();
+
+    		// Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
+    		String userName = "alumno";
+    		String password = "alumno";
+    		String url = "jdbc:mariadb://localhost/catalogo10";
+    		conn = DriverManager.getConnection(url, userName, password);
+
+    		// Paso 3: Crear la sentencia SQL
+    		sentencia = conn.createStatement();
+
+
+    		// Paso 4: Ejecutar la sentencia SQL a través de los objetos Statement
+    		String orden="";
+    		if(request.getParameter("num")!=null) {
+    			if(request.getParameter("num").equalsIgnoreCase("1")) {
+    				orden="ORDER BY obra.nombre;";
+    			}else if(request.getParameter("num").equalsIgnoreCase("2")){
+    				orden="ORDER BY obra.nombre DESC;";
+    			}else if(request.getParameter("num").equalsIgnoreCase("3")){
+    				orden="ORDER BY autor.idAutor;";
+    			}else if(request.getParameter("num").equalsIgnoreCase("4")){
+    				orden="ORDER BY autor.idAutor DESC;";
+    			}
+    		}
+
+    		String consulta = "SELECT idObra, obra.idAutor AS idAutor, obra.nombre AS nombre, obra.imagen AS imagenObra, autor.nombre AS nomAutor, autor.imagen AS imagenAutor from obra,autor WHERE obra.idAutor=autor.idAutor "+orden;
+    		ResultSet rset = sentencia.executeQuery(consulta);
+
+    		// Paso 5: Mostrar resultados
+    		if (!rset.isBeforeFirst() ) {    
+    			out.println("<h3>No hay resultados</p>");
+    		}
+
+
+    		if(request.getParameter("nombre")!=null) {
+    			String nombre=request.getParameter("nombre");
+    			String consulta2 = "SELECT idObra, obra.idAutor AS idAutor, obra.nombre AS nombre, obra.imagen AS imagenObra, autor.nombre AS nomAutor, autor.imagen AS imagenAutor from obra,autor WHERE obra.idAutor=autor.idAutor AND obra.nombre LIKE '%"+nombre+"%'";
+    			ResultSet rset2 = sentencia.executeQuery(consulta2);
+
+    			if (!rset2.isBeforeFirst() ) {    
+    				out.println("<h3>No hay resultados</p>");
+    			}
+
+    			out.println("<table style='border:'5px''>");
+    			out.println("<tr style='background-color:green'><td>Obra</td><td>Autor</td><td>ImagenObra</td></tr>");
+    			while (rset2.next()) {
+    				Obra obra2=new Obra(rset2.getString("nombre"), rset2.getString("imagenObra"),   Integer.parseInt(rset2.getString("idObra")));
+    				Autor autor2=new Autor(rset2.getString("nomAutor"),rset2.getString("imagenAutor"), Integer.parseInt(rset2.getString("idAutor")));
+    				out.println("<tr style='background-color:orange'>");
+    				out.println("<td>" + obra2.getNombre() + "</td><td> " + autor2.getNomAutor() + "</td><td>"+obra2.getImagenObra()+"</td></tr>");
+    			}
+    			out.println("</table>");
+
+    		}else  if(request.getParameter("idAutor")==null) {
+
+    			out.println("<table style='border:'5px''>");
+    			out.println("<tr style='background-color:green'><td>Obra<a href=MostrarCatalogo?num=1>&#9650;</a><a href=MostrarCatalogo?num=2>&#9660;</a></td>"
+    					+ "<td>Autor<a href=MostrarCatalogo?num=3>&#9650;</a><a href=MostrarCatalogo?num=4>&#9660;</a></td>"
+    					+ "<td>ImagenObra</td></tr>");
+    			while (rset.next()) {
+    				Obra obra=new Obra(rset.getString("nombre"), rset.getString("imagenObra"),   Integer.parseInt(rset.getString("idObra")));
+    				Autor autor=new Autor(rset.getString("nomAutor"),rset.getString("imagenAutor"), Integer.parseInt(rset.getString("idAutor")));
+     				out.println("<tr style='background-color:orange'>");
+    				out.println("<td>" +"<a href=MostrarObra?idObra='"+obra.getIdObra()+"'>"+obra.getNombre() + "</td><td><a href=MostrarCatalogo?idAutor='"+autor.getIdAutor()+"'>"+autor.getNomAutor()+"</td><td>"+obra.getImagenObra()+"</td></tr>");
+    			}
+    			out.println("</table>");
+
+    		}else if(request.getParameter("idAutor")!=null){
+    			String idAutor=request.getParameter("idAutor");
+    			String consulta1 = "SELECT idObra, obra.idAutor  AS idAutor, obra.nombre AS nombre, obra.imagen AS imagenObra, autor.nombre AS nomAutor, autor.imagen AS imagenAutor from obra,autor WHERE obra.idAutor="+idAutor+" AND obra.idAutor=autor.idAutor";
+    			ResultSet rset1 = sentencia.executeQuery(consulta1);
+
+    			if (!rset1.isBeforeFirst() ) {    
+    				out.println("<h3>No hay resultados</p>");
+    			}
+
+    			out.println("<table style='border:'5px''>");
+    			out.println("<tr style='background-color:green'><td>Obra<a href=MostrarCatalogo?num=1>&#9650;</a><a href=MostrarCatalogo?num=2>&#9660;</a></td>"
+    					+ "<td>Autor<a href=MostrarCatalogo?num=3>&#9650;</a><a href=MostrarCatalogo?num=4>&#9660;</a></td>"
+    					+ "<td>ImagenObra</td><td>ImagenAutor</td></tr>");
+    			while (rset1.next()) {
+    				Obra obra1=new Obra(rset1.getString("nombre"), rset1.getString("imagenObra"),   Integer.parseInt(rset1.getString("idObra")));
+    				Autor autor1=new Autor(rset1.getString("nomAutor"),rset1.getString("imagenAutor"), Integer.parseInt(rset1.getString("idAutor")));
+    				out.println("<td>" +"<a href=MostrarObra?idObra='"+obra1.getIdObra()+"'>"+obra1.getNombre() + "</a></td><td> " + autor1.getNomAutor() + "</td><td>"+obra1.getImagenObra()+"</td><td>"+autor1.getImagenAutor()+"</td></tr>");
+    			}
+    			out.println("</table>");
+
+    		} 
+
+
+
+    		out.println("<form action='MostrarCatalogo' method='post'><br/>");
+    		out.println("<label>Buscar obra por nombre: </label>");
+    		out.println("<input type='text' name='nombre'>");
+    		out.println("<input type='submit' value='Enviar' name='enviar'>");
+    		out.println("</form>");
+
+
+
+    		// Paso 6: Desconexión
+    		if (sentencia != null)
+    			sentencia.close();
+    		if (conn != null)
+    			conn.close();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+
+    	out.print("<a href=MostrarCatalogo>Eliminar filtros</a></br>");
+    	out.print("<a href=./index.html>Index</a>");
+    	
+    	
+    	
+    	out.println("</body></html>");
+
+    }
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

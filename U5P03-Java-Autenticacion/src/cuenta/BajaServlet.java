@@ -46,9 +46,9 @@ public class BajaServlet extends HttpServlet {
 			Class.forName("org.mariadb.jdbc.Driver").newInstance();
 
 			// Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
-			String userName = contexto.getInitParameter("usr_db_r");
-			String password = contexto.getInitParameter("psw_db_r");
-			String url = contexto.getInitParameter("srv_db")+"/catalogo11";
+			String userName = contexto.getInitParameter("usr_db_rw");
+			String password = contexto.getInitParameter("psw_db_rw");
+			String url = contexto.getInitParameter("srv_db")+"/catalogo10";
 			conn = DriverManager.getConnection(url, userName, password);
 
 			String consultaBaja = "DELETE FROM usuario WHERE login = '" +usuario.getLogin()+ "';";

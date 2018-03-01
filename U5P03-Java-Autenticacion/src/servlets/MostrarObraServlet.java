@@ -1,8 +1,5 @@
 package servlets;
 
-import modelo.Obra;
-import modelo.Usuario;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -18,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import modelo.Autor;
+import modelo.Obra;
+import modelo.Usuario;
 
 /**
  * Servlet implementation class MostrarObraServlet
@@ -39,21 +38,27 @@ public class MostrarObraServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext contexto = getServletContext();
-		response.setContentType("text/html;UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<html><head><meta charset='UTF-8'/></head><body>");
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+    	ServletContext contexto = getServletContext();
+    	PrintWriter out = response.getWriter();
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		
-		Connection conn = null;
-		Statement sentencia = null;
-		try {
+    	response.setContentType("text/html;UTF-8");
+    	out.println("<h1>Sesión iniciada como <a href='"+contexto.getContextPath()+"/Cuenta'>" + usuario.getNombre() + "</a></h1>");
+		out.println("<html><head><meta charset='UTF-8'/></head><body>");
+
+    	Connection conn = null;
+    	Statement sentencia = null;
+
+    	try {
 		  // Paso 1: Cargar el driver JDBC.
 		 Class.forName("org.mariadb.jdbc.Driver").newInstance();
 
 		  // Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
 		  String userName = "alumno";
 		  String password = "alumno";
-		  String url = "jdbc:mariadb://localhost:3306/catalogo11";
+		  String url = "jdbc:mariadb://localhost/catalogo10";
 		  conn = DriverManager.getConnection(url, userName, password);
 
 		  // Paso 3: Crear la sentencia SQL
@@ -61,11 +66,11 @@ public class MostrarObraServlet extends HttpServlet {
 
 		  // Paso 4: Ejecutar la sentencia SQL a través de los objetos Statement
 		  String where="";
-			if(request.getParameter("id_obra")!=null) {
-				where="&& id_obra="+request.getParameter("id_obra");
+			if(request.getParameter("idObra")!=null) {
+				where="&& idObra="+request.getParameter("idObra");
 			}
 			
-		  String consulta = "SELECT * from obra,autor WHERE obra.id_autor=autor.id "+where;
+		  String consulta = "SELECT idObra, obra.idAutor  AS idAutor, obra.nombre AS nombre, obra.imagen AS imagenObra, autor.nombre AS nomAutor, autor.imagen AS imagenAutor from obra,autor WHERE obra.idAutor=autor.idAutor "+where;
 		  ResultSet rset = sentencia.executeQuery(consulta);
 
 		   // Paso 5: Mostrar resultados
@@ -77,12 +82,13 @@ public class MostrarObraServlet extends HttpServlet {
 		 
 		  
 		  out.println("<table style='border:'5px''>");
-		  out.println("<tr style='background-color:lightblue'><td>Titulo</td><td>Autor</td><td>Genero</td><td>Imagen</td></tr>");
+		  out.println("<tr style='background-color:green'><td>Obra</td><td>Autor</td><td>ImagenObra</td></tr>");
 		  while (rset.next()) {
-			 Obra obra=new Obra(rset.getString("id_obra"), rset.getString("titulo"), rset.getString("id_autor"), rset.getString("genero"), rset.getString("descripcion"), rset.getString("año"), rset.getString("imagen"), rset.getString("nombre"));
-			
-			out.println("<tr style='background-color:orange'>");
-		    out.println("<td>" + obra.getTitulo() + "</td><td> " + obra.getNombre() + "</td><td>"+obra.getGenero()+"</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
+			  Obra obra=new Obra(rset.getString("nombre"), rset.getString("imagenObra"),   Integer.parseInt(rset.getString("idObra")));
+			  Autor autor= new Autor(rset.getString("nomAutor"), rset.getString("imagenAutor"), Integer.parseInt(rset.getString("idAutor")));
+			  out.println("<tr style='background-color:orange'>");
+			  
+			  out.println("<td>" + obra.getNombre() + "</td><td> " + autor.getNomAutor() + "</td><td>"+obra.getImagenObra()+"</td></tr>");
 		  }
 		  out.println("</table>");
 
@@ -95,14 +101,9 @@ public class MostrarObraServlet extends HttpServlet {
 		  e.printStackTrace();
 		}
 	
-		out.print("<a href=MostrarCatalogo>Eliminar filtros<br>");
-
-		HttpSession session = request.getSession();
-		Usuario usuario = (Usuario) session.getAttribute("usuario");
-		out.println("<h4>Sesión iniciada como <a href='"+request.getRequestURI()+"Cuenta'>" 
-			+ usuario.getNombre() + "</a></h4>");
+		out.print("<a href=MostrarCatalogo>Eliminar filtros</a><br>");
+    	out.print("<a href=./index.html>Index</a>");
 		out.println("</body></html>");
-		
 	}
 
 	/**
