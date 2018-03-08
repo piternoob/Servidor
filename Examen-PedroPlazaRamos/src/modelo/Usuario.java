@@ -1,5 +1,5 @@
 package modelo;
-
+//este no es el del examen
 public class Usuario {
 	private String login;
 	private String password;

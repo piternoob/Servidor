@@ -9,7 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <context-param>
     <param-name>srv_db</param-name>
     <param-value>jdbc:mariadb://localhost/supermercado</param-value>
@@ -18,7 +17,7 @@
     <param-name>usr_db_r</param-name>
     <param-value>alumno</param-value>
   </context-param>
-   <context-param>
+  <context-param>
     <param-name>psw_db_r</param-name>
     <param-value>alumno</param-value>
   </context-param>
@@ -26,7 +25,6 @@
     <param-name>usr_db_rw</param-name>
     <param-value>alumno_rw</param-value>
   </context-param>
- 
   <context-param>
     <param-name>psw_db_rw</param-name>
     <param-value>dwes</param-value>
