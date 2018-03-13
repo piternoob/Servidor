@@ -14,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class MostrarCartelServlet
@@ -26,6 +27,7 @@ public class PrincipalServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
 	  public PrincipalServlet() {
+		  
 	        super();
 	        // TODO Auto-generated constructor stub
 	    }
