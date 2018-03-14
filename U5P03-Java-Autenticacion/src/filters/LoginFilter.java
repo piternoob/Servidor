@@ -1,4 +1,4 @@
-package filtros;
+package filters;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -36,7 +36,7 @@ public class LoginFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+	/*public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req; // L1
 		HttpServletResponse response = (HttpServletResponse) res; // L1
 		ServletContext contexto = request.getServletContext(); 
@@ -61,7 +61,37 @@ public class LoginFilter implements Filter {
 		}else{
 			chain.doFilter(request, response);
 		}
+	}*/
+		
+
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+		// definimos elementos que utilizaremos:
+		HttpServletRequest request = (HttpServletRequest) req; // L1
+		HttpServletResponse response = (HttpServletResponse) res; // L1
+		ServletContext contexto = request.getServletContext(); 
+		String uri = request.getRequestURI();
+		HttpSession session = request.getSession(false); // si no existe no la creamos // L2
+		String errorSesion = ""; // L3
+		// comprobamos posibles errores:
+		// a. Aviso: intento de acceso sin sesión iniciada
+		// b. Aviso: existe sesión iniciada pero no contiene usuario
+		// c. Aviso: existe sesión iniciada pero el usuario no existe en la base de datos
+		// redirigir en caso de error, salvo en excepciones
+		if (session == null) {
+			errorSesion="No hay sesion iniciada";//a
+		} else {
+			if (session.getAttribute("usuario") == null) {
+				errorSesion="Sesion iniciada, pero no contiene usuario";//b
+			}
+		}
+		if( !errorSesion.isEmpty() && !(uri.endsWith("html") || uri.endsWith("Login") || uri.endsWith("Alta"))){ // L4
+			contexto.log(errorSesion + " - " + uri);
+			response.sendRedirect(contexto.getContextPath()+"/Login");
+		}else{
+			chain.doFilter(request, response);
+		}
 	}
+
 
 	/**
 	 * @see Filter#init(FilterConfig)

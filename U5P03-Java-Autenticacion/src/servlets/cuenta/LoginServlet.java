@@ -1,4 +1,4 @@
-package cuenta;
+package servlets.cuenta;
 import modelo.Usuario;
 
 import java.io.IOException;
@@ -57,22 +57,15 @@ public class LoginServlet extends HttpServlet {
 			sentencia = conn.createStatement();
 
 			if (session != null) {
-				if ((session.getAttribute("login") != null)) { // L2
-					response.sendRedirect(contexto.getContextPath() + "/"); // L3
+				if ((session.getAttribute("login") != null)) {
+					response.sendRedirect(contexto.getContextPath() + "/MostrarCatalogo");
 				}
-			} else { // no hay sesión iniciada
-				if (request.getMethod().equals("POST")) { // si venimos de enviar el formulario...
-					// Procesar los campos del formulario de login y password
-					// Declarar una variable de mensaje de error para mostrar después:
+			} else {
+				if (request.getMethod().equals("POST")) { 
 					mensajeError = "";
-
-					// Comprobaciones que debes hacer:
-
-					// a. Error: el campo login no puede estar vacío
 					if (request.getParameter("login") == "") {
 						mensajeError = "Usuario vacio";
 					} else {
-						// b. Error: el campo password no puede estar vacío
 						if (request.getParameter("password") == "") {
 							mensajeError = "Contraseña vacia";
 						} else {
@@ -80,10 +73,8 @@ public class LoginServlet extends HttpServlet {
 
 								String consulta = "SELECT * FROM usuario where usuario.login LIKE '" + request.getParameter("username") + "'";
 								ResultSet rset = sentencia.executeQuery(consulta);
-								// c. Error: no se encuentra el usuario en la base de datos
 								if (!rset.isBeforeFirst()) {
 									mensajeError = "Usuario no valido";
-									// d. Error: la contraseña no es válida
 								} else {
 									rset.next();
 
@@ -96,20 +87,20 @@ public class LoginServlet extends HttpServlet {
 										int admin = rset.getInt("admin");
 										String descripcion = rset.getString("descripcion");
 										if (admin == 1) {
-											session = request.getSession(); // en este caso sin "false" para que se cree
+											session = request.getSession();
 
 											Usuario user = new Usuario(login, pas, nombre,true, descripcion );
 											session.setAttribute("usuario", user);
 											contexto.log("Crear sesion " + request.getRequestURI());
-											response.sendRedirect(contexto.getContextPath() + "/");
+											response.sendRedirect(contexto.getContextPath() + "/MostrarCatalogo");
 
 										} else {
-											session = request.getSession(); // en este caso sin "false" para que se cree
+											session = request.getSession();
 
 											Usuario user = new Usuario(login, pas, nombre, false,descripcion );
 											session.setAttribute("usuario", user);
 											contexto.log("Crear sesion " + request.getRequestURI());
-											response.sendRedirect(contexto.getContextPath() + "/");
+											response.sendRedirect(contexto.getContextPath() + "/MostrarCatalogo");
 
 										}
 									}
@@ -117,20 +108,13 @@ public class LoginServlet extends HttpServlet {
 								}
 							}
 						}
-						// Si todo ha ido bien:
-						// 1. Crear un objeto de la clase Usuario con los datos obtenidos de la BD
-						// 2. Crear una nueva sesión y avisarlo en un mensaje de log:
-
-						// 3. Añadir los atributos de sesión "login" y "usuario"
-						// 4. Redirigir al contenido
 					}
-					// salida : L4
 
 				}
-			
+
 			out.println("<html><head><meta charset='UTF-8'/>" 
                         + "<style> .error {color: red}</style>"
-                        + "<title>Catálogo de Jose Maria Fernandez</title></head><body>");
+                        + "<title>Catálogo de Pedro Plaza Ramos</title></head><body>");
 			out.println("<h3>Inicio de sesión</h3>");
 			out.println("<form action='" + request.getRequestURI() + "' method='post'>"
 					+ "<label>Usuario:</label><input type='text' name='username'><br/>"
@@ -139,18 +123,17 @@ public class LoginServlet extends HttpServlet {
                     + "</form>" + "<p><a href='"
 					+ contexto.getContextPath() + "/Alta'>¿Aún no estás registrado? Haz clic en este enlace</a></p>"
 					+ "<h3>" + mensajeError + "</h3>");
-			
+
 			}
-		 
-		 
+
+
 			} catch (Exception e) {
 			 e.printStackTrace();
 			}
-		
+
 		out.println("</body></html>");
-		}
-		
-	
+		 
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

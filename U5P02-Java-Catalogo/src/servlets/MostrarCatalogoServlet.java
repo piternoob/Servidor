@@ -75,7 +75,7 @@ public class MostrarCatalogoServlet extends HttpServlet {
 
     		// Paso 5: Mostrar resultados
     		if (!rset.isBeforeFirst() ) {    
-    			out.println("<h3>No hay resultados</p>");
+    			out.println("<p>No hay resultados</p>");
     		}
 
 
@@ -85,17 +85,19 @@ public class MostrarCatalogoServlet extends HttpServlet {
     			ResultSet rset2 = sentencia.executeQuery(consulta2);
 
     			if (!rset2.isBeforeFirst() ) {    
-    				out.println("<h3>No hay resultados</p>");
-    			}
+    				out.println("<p>No hay resultados</p>");
+    			} else {
 
-    			out.println("<table style='border:'5px''>");
-    			out.println("<tr style='background-color:green'><td>Obra</td><td>Autor</td><td>ImagenObra</td></tr>");
-    			while (rset2.next()) {
-    				Obra obra2=new Obra(rset2.getString("nombre"), rset2.getString("imagenObra"), rset2.getString("nomAutor"), rset2.getString("imagenAutor"), Integer.parseInt(rset2.getString("idObra")), Integer.parseInt(rset2.getString("idAutor")));
-    				out.println("<tr style='background-color:orange'>");
-    				out.println("<td>" + obra2.getNombre() + "</td><td> " + obra2.getNomAutor() + "</td><td>"+obra2.getImagenObra()+"</td></tr>");
+    				out.println("<table style='border:'5px''>");
+    				out.println("<tr style='background-color:green'><td>Obra</td><td>Autor</td><td>ImagenObra</td></tr>");
+    				while (rset2.next()) {
+    					Obra obra2=new Obra(rset2.getString("nombre"), rset2.getString("imagenObra"),   Integer.parseInt(rset2.getString("idObra")));
+    					Autor autor2=new Autor(rset2.getString("nomAutor"),rset2.getString("imagenAutor"), Integer.parseInt(rset2.getString("idAutor")));
+    					out.println("<tr style='background-color:orange'>");
+    					out.println("<td>" + obra2.getNombre() + "</td><td> " + autor2.getNomAutor() + "</td><td>"+obra2.getImagenObra()+"</td></tr>");
+    				}
+    				out.println("</table>");
     			}
-    			out.println("</table>");
 
     		}else  if(request.getParameter("idAutor")==null) {
 
@@ -104,9 +106,10 @@ public class MostrarCatalogoServlet extends HttpServlet {
     					+ "<td>Autor<a href=MostrarCatalogo?num=3>&#9650;</a><a href=MostrarCatalogo?num=4>&#9660;</a></td>"
     					+ "<td>ImagenObra</td></tr>");
     			while (rset.next()) {
-    				Obra obra=new Obra(rset.getString("nombre"), rset.getString("imagenObra"), rset.getString("nomAutor"), rset.getString("imagenAutor"), Integer.parseInt(rset.getString("idObra")), Integer.parseInt(rset.getString("idAutor")));
-    				out.println("<tr style='background-color:orange'>");
-    				out.println("<td>" +"<a href=MostrarObra?idObra='"+obra.getIdObra()+"'>"+obra.getNombre() + "</td><td><a href=MostrarCatalogo?idAutor='"+obra.getIdAutor()+"'>"+obra.getNomAutor()+"</td><td>"+obra.getImagenObra()+"</td></tr>");
+    				Obra obra=new Obra(rset.getString("nombre"), rset.getString("imagenObra"),   Integer.parseInt(rset.getString("idObra")));
+    				Autor autor=new Autor(rset.getString("nomAutor"),rset.getString("imagenAutor"), Integer.parseInt(rset.getString("idAutor")));
+     				out.println("<tr style='background-color:orange'>");
+    				out.println("<td>" +"<a href=MostrarObra?idObra='"+obra.getIdObra()+"'>"+obra.getNombre() + "</td><td><a href=MostrarCatalogo?idAutor='"+autor.getIdAutor()+"'>"+autor.getNomAutor()+"</td><td>"+obra.getImagenObra()+"</td></tr>");
     			}
     			out.println("</table>");
 
@@ -116,7 +119,7 @@ public class MostrarCatalogoServlet extends HttpServlet {
     			ResultSet rset1 = sentencia.executeQuery(consulta1);
 
     			if (!rset1.isBeforeFirst() ) {    
-    				out.println("<h3>No hay resultados</p>");
+    				out.println("<p>No hay resultados</p>");
     			}
 
     			out.println("<table style='border:'5px''>");
@@ -124,8 +127,9 @@ public class MostrarCatalogoServlet extends HttpServlet {
     					+ "<td>Autor<a href=MostrarCatalogo?num=3>&#9650;</a><a href=MostrarCatalogo?num=4>&#9660;</a></td>"
     					+ "<td>ImagenObra</td><td>ImagenAutor</td></tr>");
     			while (rset1.next()) {
-    				Obra obra1=new Obra(rset1.getString("nombre"), rset1.getString("imagenObra"), rset1.getString("nomAutor"), rset1.getString("imagenAutor"), Integer.parseInt(rset1.getString("idObra")), Integer.parseInt(rset1.getString("idAutor")));out.println("<tr style='background-color:orange'>");
-    				out.println("<td>" +"<a href=MostrarObra?idObra='"+obra1.getIdObra()+"'>"+obra1.getNombre() + "</a></td><td> " + obra1.getNomAutor() + "</td><td>"+obra1.getImagenObra()+"</td><td>"+obra1.getImagenAutor()+"</td></tr>");
+    				Obra obra1=new Obra(rset1.getString("nombre"), rset1.getString("imagenObra"),   Integer.parseInt(rset1.getString("idObra")));
+    				Autor autor1=new Autor(rset1.getString("nomAutor"),rset1.getString("imagenAutor"), Integer.parseInt(rset1.getString("idAutor")));
+    				out.println("<td>" +"<a href=MostrarObra?idObra='"+obra1.getIdObra()+"'>"+obra1.getNombre() + "</a></td><td> " + autor1.getNomAutor() + "</td><td>"+obra1.getImagenObra()+"</td><td>"+autor1.getImagenAutor()+"</td></tr>");
     			}
     			out.println("</table>");
 
@@ -150,8 +154,7 @@ public class MostrarCatalogoServlet extends HttpServlet {
     		e.printStackTrace();
     	}
 
-    	out.print("<a href=MostrarCatalogo>Eliminar filtros</a></br>");
-    	out.print("<a href=./index.html>Index</a>");
+    	out.print("<p><a href=MostrarCatalogo>Eliminar filtros</a></p>");
     	out.println("</body></html>");
 
     }

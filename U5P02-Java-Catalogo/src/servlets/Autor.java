@@ -1,4 +1,4 @@
-package modelo;
+package servlets;
 
 public class Autor {
 	

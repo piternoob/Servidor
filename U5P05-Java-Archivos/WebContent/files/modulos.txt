@@ -1,0 +1,6 @@
+servidor
+cliente
+interfaces
+despliegue
+empresa
+ingles

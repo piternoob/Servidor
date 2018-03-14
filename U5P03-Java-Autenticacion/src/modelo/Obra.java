@@ -14,11 +14,10 @@ public class Obra {
 	public String getNombre() {return nombre;}
 	public void setNombre(String nombre) {this.nombre = nombre;}
 	
-	public String getImagenObra() { return "<img src='/U5P03-Java-Autenticacion/img/"+imagenObra+"'height=200px width=200px>";}
+	public String getImagenObra() { return "<img src='/U5P02-Java-Catalogo/img/"+imagenObra+"'height=200px width=200px>";}
 	public void setImagenObra(String imagenObra) {this.imagenObra = imagenObra;}
 	
 	public int getIdObra() {return idObra;}
 	public void setIdObra(int idObra) {this.idObra = idObra;}
-	
-}
 
+}

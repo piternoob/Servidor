@@ -65,7 +65,7 @@ public class MostrarObraServlet extends HttpServlet {
 
 		   // Paso 5: Mostrar resultados
 		  if (!rset.isBeforeFirst() ) {    
-			    out.println("<h3>No hay resultados</p>");
+			    out.println("<p>No hay resultados</p>");
 			}
 		  
 		 
@@ -74,8 +74,10 @@ public class MostrarObraServlet extends HttpServlet {
 		  out.println("<table style='border:'5px''>");
 		  out.println("<tr style='background-color:green'><td>Obra</td><td>Autor</td><td>ImagenObra</td></tr>");
 		  while (rset.next()) {
-			 Obra obra=new Obra(rset.getString("nombre"), rset.getString("imagenObra"), rset.getString("nomAutor"), rset.getString("imagenAutor"), Integer.parseInt(rset.getString("idObra")), Integer.parseInt(rset.getString("idAutor")));out.println("<tr style='background-color:orange'>");
-		    out.println("<td>" + obra.getNombre() + "</td><td> " + obra.getNomAutor() + "</td><td>"+obra.getImagenObra()+"</td></tr>");
+			  Obra obra=new Obra(rset.getString("nombre"), rset.getString("imagenObra"),   Integer.parseInt(rset.getString("idObra")));
+			  Autor autor= new Autor(rset.getString("nomAutor"), rset.getString("imagenAutor"), Integer.parseInt(rset.getString("idAutor")));
+			  out.println("<tr style='background-color:orange'>"); 
+			  out.println("<td>" + obra.getNombre() + "</td><td> " + autor.getNomAutor() + "</td><td>"+obra.getImagenObra()+"</td></tr>");
 		  }
 		  out.println("</table>");
 
@@ -88,8 +90,7 @@ public class MostrarObraServlet extends HttpServlet {
 		  e.printStackTrace();
 		}
 	
-		out.print("<a href=MostrarCatalogo>Eliminar filtros</a><br>");
-    	out.print("<a href=./index.html>Index</a>");
+		out.print("<p><a href=MostrarCatalogo>Eliminar filtros</a></p>");
 		out.println("</body></html>");
 	}
 

@@ -13,11 +13,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import modelo.Autor;
 import modelo.Obra;
-import modelo.Usuario;
 
 /**
  * Servlet implementation class MostrarObraServlet
@@ -39,26 +37,21 @@ public class MostrarObraServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-    	ServletContext contexto = getServletContext();
-    	PrintWriter out = response.getWriter();
-		Usuario usuario = (Usuario) session.getAttribute("usuario");
-		
-    	response.setContentType("text/html;UTF-8");
-    	out.println("<h1>Sesión iniciada como <a href='"+contexto.getContextPath()+"/Cuenta'>" + usuario.getNombre() + "</a></h1>");
+		ServletContext contexto = getServletContext();
+		response.setContentType("text/html;UTF-8");
+		PrintWriter out = response.getWriter();
 		out.println("<html><head><meta charset='UTF-8'/></head><body>");
-
-    	Connection conn = null;
-    	Statement sentencia = null;
-
-    	try {
+		
+		Connection conn = null;
+		Statement sentencia = null;
+		try {
 		  // Paso 1: Cargar el driver JDBC.
 		 Class.forName("org.mariadb.jdbc.Driver").newInstance();
 
 		  // Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
-		  String userName = "alumno";
-		  String password = "alumno";
-		  String url = "jdbc:mariadb://localhost/catalogo10";
+		  String userName = contexto.getInitParameter("usr_db_r");
+		  String password = contexto.getInitParameter("psw_db_r");
+		  String url=contexto.getInitParameter("srv_db")+"/catalogo10";
 		  conn = DriverManager.getConnection(url, userName, password);
 
 		  // Paso 3: Crear la sentencia SQL
@@ -75,7 +68,7 @@ public class MostrarObraServlet extends HttpServlet {
 
 		   // Paso 5: Mostrar resultados
 		  if (!rset.isBeforeFirst() ) {    
-			    out.println("<h3>No hay resultados</p>");
+			    out.println("<p>No hay resultados</p>");
 			}
 		  
 		 
@@ -86,8 +79,7 @@ public class MostrarObraServlet extends HttpServlet {
 		  while (rset.next()) {
 			  Obra obra=new Obra(rset.getString("nombre"), rset.getString("imagenObra"),   Integer.parseInt(rset.getString("idObra")));
 			  Autor autor= new Autor(rset.getString("nomAutor"), rset.getString("imagenAutor"), Integer.parseInt(rset.getString("idAutor")));
-			  out.println("<tr style='background-color:orange'>");
-			  
+			  out.println("<tr style='background-color:orange'>"); 
 			  out.println("<td>" + obra.getNombre() + "</td><td> " + autor.getNomAutor() + "</td><td>"+obra.getImagenObra()+"</td></tr>");
 		  }
 		  out.println("</table>");
@@ -101,8 +93,8 @@ public class MostrarObraServlet extends HttpServlet {
 		  e.printStackTrace();
 		}
 	
-		out.print("<a href=MostrarCatalogo>Eliminar filtros</a><br>");
-    	out.print("<a href=./index.html>Index</a>");
+		out.print("<p><a href=MostrarCatalogo>Eliminar filtros</a></p>");
+		out.print("<p><a href=Cuenta>Mi cuenta</a></p>");
 		out.println("</body></html>");
 	}
 

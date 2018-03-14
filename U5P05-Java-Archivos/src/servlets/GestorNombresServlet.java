@@ -1,6 +1,9 @@
-package cuenta;
+package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,19 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class GestorNombresServlet
  */
-@WebServlet("/Logout")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/GestorNombres")
+public class GestorNombresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public GestorNombresServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +31,16 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		ServletContext contexto = request.getServletContext();
+		// TODO Auto-generated method stub
+		ServletContext contexto = getServletContext();
+		response.setContentType("text/html;UTF-8");
+		PrintWriter out = response.getWriter();
 		
-		session.invalidate();
-		response.sendRedirect(contexto.getContextPath() + "/Login"); 
+		out.println("<html><head><meta charset='UTF-8'/></head><body>");
+		
+		Path path = Paths.get(contexto.getRealPath("/files/modulos.txt"));
+		
+		out.println("</body></html>");
 	}
 
 	/**
